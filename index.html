@@ -12,8 +12,6 @@
   <script>
     let workoutCount = 0;
     let currentPage = 'landing';
-    let selectedTier = null;
-    let googleUser = null;
     let selectedWorkout = null;
     let sessionTime = 0;
     let sessionActive = false;
@@ -25,112 +23,44 @@
         id: 1, 
         name: "Fat Loss Protocol", 
         type: "hiit", 
-        duration: 45, 
+        duration: 30, 
         difficulty: "Advanced", 
         icon: "🔥", 
-        color: "from-red-500 to-pink-500", 
-        exercises: ["Burpees", "Jump Squats", "Mountain Climbers", "Push-ups"],
+        color: "from-red-500 to-pink-500",
         objectives: [
-          { 
-            time: 0, 
-            duration: 300, 
-            exercise: "🔥 WARM-UP",
-            reps: "5 MINUTES",
-            command: "Get Your Body Ready",
-            instruction: "Light jogging in place. Arm circles. Jumping jacks. Get your heart pumping. NO STOPPING.",
-            visual: "🏃🏃🏃",
-            details: "• Light pace\n• Loose movements\n• Deep breathing"
-          },
-          { 
-            time: 300, 
-            duration: 40, 
-            exercise: "💥 BURPEES",
-            reps: "40 SECONDS - GO!",
-            command: "MAXIMUM SPEED",
-            instruction: "POSITION: Stand tall. MOVE: Drop to plank → Push-up → Jump feet back → Jump UP with hands overhead. REPEAT NON-STOP.",
-            visual: "🏃↓💪↑🙌",
-            details: "• Full range motion\n• No rest\n• Land soft on jump\n• Power from legs"
-          },
-          { 
-            time: 340, 
-            duration: 20, 
-            exercise: "😮‍💨 REST",
-            reps: "20 SECONDS",
-            command: "BREATHE HARD",
-            instruction: "Heavy breathing. Hands on knees. Prepare for next round. You're CRUSHING it!",
-            visual: "😤💨💨",
-            details: "• Catch your breath\n• Shake out legs\n• Mental prep"
-          },
-          { 
-            time: 360, 
-            duration: 40, 
-            exercise: "🦵 JUMP SQUATS",
-            reps: "40 SECONDS - GO!",
-            command: "EXPLOSIVE LEGS",
-            instruction: "POSITION: Feet shoulder-width. MOVE: Squat down → Jump UP as high as possible → Land soft → Repeat. ZERO REST.",
-            visual: "⬇️💪⬆️🙌",
-            details: "• Deep squat\n• Maximum air time\n• Soft landing\n• Drive through heels"
-          },
-          { 
-            time: 400, 
-            duration: 20, 
-            exercise: "😮‍💨 REST",
-            reps: "20 SECONDS",
-            command: "BREATHE",
-            instruction: "Still standing. Keep moving. Light bouncing. Don't sit down. KEEP ENERGY UP.",
-            visual: "🏃💨",
-            details: "• Stay moving\n• Light bouncing\n• 3-2-1 ready"
-          },
-          { 
-            time: 420, 
-            duration: 40, 
-            exercise: "⛰️ MOUNTAIN CLIMBERS",
-            reps: "40 SECONDS - GO!",
-            command: "CARDIO OVERLOAD",
-            instruction: "POSITION: Plank position, hands under shoulders. MOVE: Drive knees to chest FAST alternating. Like running in place. SPEED IS KEY.",
-            visual: "💪🏃💨💨",
-            details: "• Fast pace\n• Knees to chest\n• Keep hips level\n• Explosive motion"
-          },
-          { 
-            time: 460, 
-            duration: 20, 
-            exercise: "😮‍💨 REST",
-            reps: "20 SECONDS",
-            command: "ALMOST DONE",
-            instruction: "You're halfway through Round 1. Shake it out. Get ready for the final move.",
-            visual: "💪😤",
-            details: "• Shake legs\n• Deep breaths\n• Mental focus"
-          },
-          { 
-            time: 480, 
-            duration: 40, 
-            exercise: "💪 PUSH-UPS",
-            reps: "40 SECONDS - GO!",
-            command: "CHEST STRENGTH",
-            instruction: "POSITION: Plank with hands under shoulders. MOVE: Lower chest to ground → Push explosively up. Full range. NO SAGGING.",
-            visual: "💪⬇️⬆️💪",
-            details: "• Full depth\n• Chest touches ground\n• Explosive push\n• Tight core"
-          },
-          { 
-            time: 520, 
-            duration: 1080, 
-            exercise: "🔁 ROUND 2 & 3",
-            reps: "REPEAT ALL 4 EXERCISES",
-            command: "PUSH HARDER EACH ROUND",
-            instruction: "Same exercises. Same timing. But THIS TIME - DO MORE REPS. Push yourself. Each round gets tougher. EMBRACE THE PAIN.",
-            visual: "🔥🔥🔥",
-            details: "• Faster pace\n• More intensity\n• Less rest\n• BEAST MODE"
-          },
-          { 
-            time: 1600, 
-            duration: 300, 
-            exercise: "🧘 COOL DOWN",
-            reps: "5 MINUTES",
-            command: "YOU CRUSHED IT",
-            instruction: "Slow walking. Light stretching. Chest, shoulders, legs. Deep breathing. Heart rate dropping. YOU JUST BURNED MASSIVE CALORIES. CHAMPION.",
-            visual: "🏆😤💪",
-            details: "• Walk it out\n• Stretch chest\n• Stretch legs\n• Victory breath"
-          }
+          { exercise: "🔥 WARM-UP", reps: "5 min", duration: 300, command: "Get Your Body Ready", instruction: "Light jogging. Arm circles. Jumping jacks. Deep breathing.", details: "• Light pace\n• Loose movements\n• Deep breathing" },
+          { exercise: "💥 BURPEES", reps: "40 sec", duration: 40, command: "MAXIMUM SPEED", instruction: "Drop → Push-up → Jump feet back → Jump UP. REPEAT NON-STOP.", details: "• Full range\n• No rest\n• Land soft" },
+          { exercise: "😮‍💨 REST", reps: "20 sec", duration: 20, command: "BREATHE HARD", instruction: "Heavy breathing. Hands on knees. Prepare for next round.", details: "• Catch breath\n• Shake out legs" },
+          { exercise: "🦵 JUMP SQUATS", reps: "40 sec", duration: 40, command: "EXPLOSIVE LEGS", instruction: "Squat down → Jump UP high → Land soft. ZERO REST.", details: "• Deep squat\n• Maximum air\n• Soft landing" },
+          { exercise: "😮‍💨 REST", reps: "20 sec", duration: 20, command: "BREATHE", instruction: "Keep moving. Light bouncing. Don't stop.", details: "• Stay moving\n• Light bouncing" },
+          { exercise: "⛰️ MOUNTAIN CLIMBERS", reps: "40 sec", duration: 40, command: "CARDIO OVERLOAD", instruction: "Plank → Drive knees to chest FAST. Like running in place.", details: "• Fast pace\n• Knees to chest\n• Keep hips level" },
+          { exercise: "😮‍💨 REST", reps: "20 sec", duration: 20, command: "ALMOST DONE", instruction: "Shake it out. Get ready for final move.", details: "• Shake legs\n• Deep breaths" },
+          { exercise: "💪 PUSH-UPS", reps: "40 sec", duration: 40, command: "CHEST STRENGTH", instruction: "Lower chest to ground → Push explosively up. FULL RANGE.", details: "• Full depth\n• Explosive push\n• Tight core" },
+          { exercise: "🔥 ROUND 2", reps: "REPEAT", duration: 280, command: "PUSH HARDER", instruction: "Same 4 exercises. INCREASE INTENSITY. More reps. Less rest.", details: "• Faster pace\n• More reps\n• BEAST MODE" },
+          { exercise: "🔥 ROUND 3", reps: "ALL OUT", duration: 280, command: "FINAL ROUND", instruction: "Everything you've got. LAST PUSH. Show no mercy to yourself.", details: "• Maximum effort\n• Go harder\n• CHAMPION" },
+          { exercise: "🧘 COOL DOWN", reps: "5 min", duration: 300, command: "YOU CRUSHED IT", instruction: "Walk it out. Light stretching. Deep breathing. VICTORY.", details: "• Walk it out\n• Stretch chest\n• Stretch legs" }
+        ]
+      },
+      { 
+        id: 2, 
+        name: "Upper Body Powerhouse", 
+        type: "strength", 
+        duration: 30, 
+        difficulty: "Advanced", 
+        icon: "💪", 
+        color: "from-orange-400 to-amber-500",
+        objectives: [
+          { exercise: "🏋️ WARM-UP", reps: "3 min", duration: 180, command: "Prepare Your Shoulders", instruction: "Light cardio. Arm circles. Band work. Loosen up.", details: "• Light pace\n• Mobility work\n• Get blood flowing" },
+          { exercise: "🏋️ BENCH PRESS", reps: "4x6 REPS", duration: 360, command: "HEAVY WEIGHT", instruction: "Set moderate weight. Lower to chest. EXPLODE UP. 2 min rest between sets.", details: "• Full depth\n• Explosive push\n• Controlled descent" },
+          { exercise: "💫 DUMBBELL FLYES", reps: "3x10", duration: 180, command: "STRETCH & SQUEEZE", instruction: "Light weight. Stretch across chest. SQUEEZE at top. 1 min rest.", details: "• Full ROM\n• Slow control\n• Feel the stretch" },
+          { exercise: "💪 INCLINE PUSH-UPS", reps: "3x12", duration: 180, command: "NO REST SETS", instruction: "Hands elevated. Lower down. Push explosively. Non-stop.", details: "• Elevated hands\n• Full depth\n• Explosive" },
+          { exercise: "🔥 SHOULDER PRESS", reps: "4x8", duration: 240, command: "POWER MOVE", instruction: "Press dumbbells overhead. Control descent. WARRIOR STRENGTH. 90 sec rest.", details: "• Press overhead\n• Controlled down\n• Full ROM" },
+          { exercise: "✨ LATERAL RAISES", reps: "3x12", duration: 180, command: "BURN SHOULDERS", instruction: "Light dumbbells. Raise to shoulder height. Slow & controlled.", details: "• Shoulder height\n• Light weight\n• Controlled motion" },
+          { exercise: "🎯 FACE PULLS", reps: "3x15", duration: 180, command: "BACK ACTIVATION", instruction: "High cable. Pull to face. Spread rope wide. Perfect form.", details: "• High cable\n• Pull to face\n• Spread rope" },
+          { exercise: "🔥 BARBELL ROWS", reps: "4x6", duration: 240, command: "BACK STRENGTH", instruction: "Heavy weight. Pull explosively. Chest to bar. REST 2 MIN. THIS IS STRENGTH.", details: "• Heavy weight\n• Explosive pull\n• Chest to bar" },
+          { exercise: "💪 WEIGHTED DIPS", reps: "3x8", duration: 180, command: "DIP POWER", instruction: "Add weight belt. Lower below parallel. Drive up with POWER. 90 sec rest.", details: "• Weight belt\n• Full depth\n• Explosive drive" },
+          { exercise: "💪 BARBELL CURLS", reps: "3x10", duration: 180, command: "PUMP THOSE ARMS", instruction: "Strict form. No swinging. Curl to peak. Hold 1 sec. GUNS BLAZING.", details: "• Strict form\n• Peak contraction\n• No momentum" },
+          { exercise: "🧘 STRETCH", reps: "5 min", duration: 300, command: "RECOVERY TIME", instruction: "Chest, shoulders, arms. Deep stretches. You crushed it.", details: "• Chest stretch\n• Shoulder stretch\n• Arm stretch" }
         ]
       }
     ];
@@ -141,16 +71,36 @@
       return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
-    function getCurrentObjective(workoutId, timeElapsed) {
+    function getCurrentObjectiveIndex(workoutId, timeElapsed) {
       const w = workouts.find(x => x.id === workoutId);
-      if (!w || !w.objectives) return null;
+      if (!w) return 0;
       
-      for (let i = w.objectives.length - 1; i >= 0; i--) {
-        if (timeElapsed >= w.objectives[i].time) {
-          return w.objectives[i];
-        }
+      let cumTime = 0;
+      for (let i = 0; i < w.objectives.length; i++) {
+        cumTime += w.objectives[i].duration;
+        if (timeElapsed < cumTime) return i;
       }
-      return w.objectives[0];
+      return w.objectives.length - 1;
+    }
+
+    function getTimeIntoObjective(workoutId, timeElapsed) {
+      const w = workouts.find(x => x.id === workoutId);
+      if (!w) return 0;
+      
+      let cumTime = 0;
+      for (let i = 0; i < w.objectives.length; i++) {
+        if (timeElapsed < cumTime + w.objectives[i].duration) {
+          return timeElapsed - cumTime;
+        }
+        cumTime += w.objectives[i].duration;
+      }
+      return 0;
+    }
+
+    function getTotalDuration(workoutId) {
+      const w = workouts.find(x => x.id === workoutId);
+      if (!w) return 0;
+      return w.objectives.reduce((sum, obj) => sum + obj.duration, 0);
     }
 
     function startCountdown() {
@@ -162,9 +112,7 @@
 
     function updateCountdown() {
       if (!countdownActive) return;
-      
       render();
-      
       if (countdownValue > 0) {
         countdownValue--;
         setTimeout(updateCountdown, 1000);
@@ -183,12 +131,10 @@
 
     function updateSession() {
       if (!sessionActive) return;
-      
       sessionTime++;
-      
       render();
-      
-      if (sessionTime < 1900) {
+      const totalDuration = getTotalDuration(selectedWorkout);
+      if (sessionTime < totalDuration) {
         setTimeout(updateSession, 1000);
       } else {
         sessionActive = false;
@@ -201,111 +147,121 @@
       if (currentPage === 'landing') {
         app.innerHTML = `
           <div class="min-h-screen flex items-center justify-center px-6 bg-gradient-to-b from-black to-gray-900">
-            <div class="text-center space-y-6 max-w-2xl">
+            <div class="text-center space-y-8 max-w-2xl">
               <div class="text-7xl animate-pulse">🏋️</div>
               <h1 class="text-6xl font-black bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">KHAN</h1>
-              <p class="text-2xl font-bold text-orange-400">AI Fitness Coach</p>
-              <p class="text-xl text-gray-400">Real-time coaching. Real results.</p>
-              <p class="text-gray-500">See detailed instructions for every move.</p>
-              <button onclick="startWorkout()" class="px-12 py-6 rounded-xl font-black text-xl bg-gradient-to-r from-orange-400 to-red-500 hover:opacity-90 transition transform hover:scale-105">
-                🚀 Start Fat Loss Protocol
-              </button>
+              <p class="text-2xl font-bold text-orange-400">Professional Fitness Coach</p>
+              <p class="text-gray-500">Real-time coaching with precise timing</p>
+              
+              <div class="space-y-3 mt-8">
+                ${workouts.map(w => `
+                  <button onclick="selectWorkout(${w.id})" class="w-full py-4 px-6 rounded-xl border-2 border-gray-700 hover:border-orange-400 bg-gradient-to-br ${w.color}/10 transition">
+                    <p class="text-2xl mb-1">${w.icon} ${w.name}</p>
+                    <p class="text-sm text-gray-400">${w.difficulty} • ${w.duration}min</p>
+                  </button>
+                `).join('')}
+              </div>
             </div>
           </div>
         `;
       } else if (currentPage === 'countdown') {
-        const w = workouts[0];
-        
+        const w = workouts.find(x => x.id === selectedWorkout);
         app.innerHTML = `
           <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white flex flex-col items-center justify-center px-6">
             <div class="text-center space-y-12">
               <h1 class="text-5xl font-black bg-gradient-to-r ${w.color} bg-clip-text text-transparent">${w.name}</h1>
-              
-              <p class="text-3xl text-gray-400 font-bold">Are you ready?</p>
-              
+              <p class="text-3xl text-gray-400 font-bold">Ready?</p>
               <div class="relative">
                 <div class="absolute inset-0 bg-gradient-to-r ${w.color} blur-3xl opacity-50"></div>
-                <div class="relative text-9xl font-black text-white animate-pulse">
-                  ${countdownValue > 0 ? countdownValue : '🚀'}
-                </div>
+                <div class="relative text-9xl font-black text-white animate-pulse">${countdownValue > 0 ? countdownValue : '🚀'}</div>
               </div>
-              
-              <p class="text-xl text-orange-400 font-bold">
-                ${countdownValue > 0 ? '⏳ Prepare for MAXIMUM INTENSITY!' : '💪 GO GO GO!'}
-              </p>
             </div>
           </div>
         `;
       } else if (currentPage === 'workout-active') {
-        const w = workouts[0];
-        const progress = Math.min(100, (sessionTime / 1900) * 100);
-        const objective = getCurrentObjective(w.id, sessionTime);
-        const isCompleted = sessionTime >= 1900;
+        const w = workouts.find(x => x.id === selectedWorkout);
+        const totalDuration = getTotalDuration(selectedWorkout);
+        const objIndex = getCurrentObjectiveIndex(selectedWorkout, sessionTime);
+        const timeIntoObj = getTimeIntoObjective(selectedWorkout, sessionTime);
+        const obj = w.objectives[objIndex];
+        const nextObj = w.objectives[objIndex + 1];
+        const totalProgress = Math.min(100, (sessionTime / totalDuration) * 100);
+        const objProgress = Math.min(100, (timeIntoObj / obj.duration) * 100);
+        const timeLeft = obj.duration - timeIntoObj;
+        const totalTimeLeft = totalDuration - sessionTime;
 
         app.innerHTML = `
           <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white px-6 py-8 flex flex-col overflow-y-auto">
             <button onclick="finishWorkout()" class="text-gray-400 hover:text-orange-400 self-start mb-4">← Exit</button>
             
-            <!-- TIMER & PROGRESS -->
-            <div class="text-center space-y-4 mb-8">
-              <div class="text-7xl font-black tabular-nums">${formatTime(sessionTime)}</div>
-              <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
-                <div class="bg-gradient-to-r ${w.color} h-full transition-all" style="width: ${progress}%"></div>
+            <!-- TOTAL WORKOUT TIMER -->
+            <div class="text-center mb-6">
+              <p class="text-gray-400 text-sm mb-2">TOTAL WORKOUT TIME</p>
+              <p class="text-5xl font-black tabular-nums">${formatTime(sessionTime)} / ${formatTime(totalDuration)}</p>
+              <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden mt-3">
+                <div class="bg-gradient-to-r ${w.color} h-full transition-all" style="width: ${totalProgress}%"></div>
               </div>
-              <p class="text-sm text-gray-400">Overall Progress: ${Math.round(progress)}% | Remaining: ${formatTime(1900 - sessionTime)}</p>
+              <p class="text-xs text-gray-500 mt-2">${Math.round(totalProgress)}% Complete • ${formatTime(totalTimeLeft)} Remaining</p>
             </div>
 
-            <!-- MAIN EXERCISE DISPLAY -->
+            <!-- CURRENT EXERCISE TIMER (BIG) -->
             <div class="flex-1 flex flex-col items-center justify-center space-y-8 max-w-3xl mx-auto">
+              <div class="text-8xl animate-bounce">${obj.exercise.split(' ')[0]}</div>
               
-              <!-- Visual Emoji -->
-              <div class="text-9xl animate-bounce">${objective.visual}</div>
-              
-              <!-- Exercise Name & Reps -->
               <div class="text-center space-y-2">
-                <p class="text-5xl font-black text-yellow-400">${objective.exercise}</p>
-                <p class="text-3xl font-bold text-orange-300">${objective.reps}</p>
+                <p class="text-5xl font-black text-yellow-400">${formatTime(timeLeft)}</p>
+                <p class="text-2xl font-bold text-gray-400">${obj.exercise}</p>
+                <p class="text-xl text-orange-300">${obj.reps}</p>
               </div>
 
-              <!-- MAIN COMMAND (BIG & BOLD) -->
+              <!-- EXERCISE PROGRESS BAR -->
+              <div class="w-full max-w-md">
+                <div class="bg-gray-800 rounded-full h-4 overflow-hidden">
+                  <div class="bg-gradient-to-r ${w.color} h-full transition-all" style="width: ${objProgress}%"></div>
+                </div>
+                <p class="text-center text-xs text-gray-500 mt-2">${Math.round(objProgress)}%</p>
+              </div>
+
+              <!-- COMMAND & INSTRUCTION -->
               <div class="border-4 border-yellow-400 rounded-2xl p-8 bg-yellow-400/10 w-full text-center space-y-4">
-                <p class="text-5xl font-black text-yellow-400 animate-pulse">${objective.command}</p>
-                <p class="text-2xl text-orange-300 font-bold">${objective.instruction}</p>
+                <p class="text-4xl font-black text-yellow-400 animate-pulse">${obj.command}</p>
+                <p class="text-xl text-orange-300 font-bold">${obj.instruction}</p>
               </div>
 
-              <!-- DETAILED FORM GUIDE -->
+              <!-- FORM GUIDE -->
               <div class="bg-gray-800/70 rounded-xl p-6 w-full border border-gray-600">
                 <p class="text-sm text-gray-400 mb-3">📋 FORM CHECKLIST:</p>
-                <div class="text-sm text-gray-300 whitespace-pre-line font-mono leading-relaxed">
-                  ${objective.details}
-                </div>
+                <div class="text-sm text-gray-300 whitespace-pre-line font-mono">${obj.details}</div>
               </div>
 
-              <!-- ACTION BUTTON -->
-              ${!isCompleted ? `
-                <button onclick="continueWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105 shadow-lg">
-                  💪 KEEP PUSHING
-                </button>
-              ` : `
-                <button onclick="completeWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r from-green-400 to-emerald-500 hover:opacity-90 transition transform hover:scale-105 shadow-lg">
-                  🏆 WORKOUT COMPLETE!
-                </button>
-              `}
+              <!-- NEXT EXERCISE PREVIEW -->
+              ${nextObj ? `
+                <div class="bg-gray-900/70 rounded-xl p-6 w-full border border-gray-600 mt-4">
+                  <p class="text-sm text-gray-400 mb-2">⏭️ NEXT UP:</p>
+                  <p class="text-2xl font-black text-blue-400">${nextObj.exercise}</p>
+                  <p class="text-sm text-gray-400 mt-1">${nextObj.reps} • ${nextObj.command}</p>
+                </div>
+              ` : ''}
+
+              <!-- GO BUTTON -->
+              <button onclick="continueWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105 shadow-lg">
+                💪 PUSH
+              </button>
             </div>
 
-            <!-- FOOTER STATS -->
+            <!-- PHASE INFO -->
             <div class="mt-8 grid grid-cols-3 gap-4 text-center border-t border-gray-700 pt-6">
               <div>
+                <p class="text-gray-400 text-xs">EXERCISE</p>
+                <p class="text-lg font-black text-orange-400">${objIndex + 1}/${w.objectives.length}</p>
+              </div>
+              <div>
                 <p class="text-gray-400 text-xs">DIFFICULTY</p>
-                <p class="text-xl font-black text-orange-400">${w.difficulty}</p>
+                <p class="text-lg font-black text-red-400">${w.difficulty}</p>
               </div>
               <div>
-                <p class="text-gray-400 text-xs">PHASE</p>
-                <p class="text-xl font-black text-blue-400">${Math.ceil(sessionTime / 100)} / 10</p>
-              </div>
-              <div>
-                <p class="text-gray-400 text-xs">INTENSITY</p>
-                <p class="text-xl font-black text-red-400">MAX 🔥</p>
+                <p class="text-gray-400 text-xs">TYPE</p>
+                <p class="text-lg font-black text-blue-400">${w.type.toUpperCase()}</p>
               </div>
             </div>
           </div>
@@ -313,7 +269,8 @@
       }
     }
 
-    function startWorkout() {
+    function selectWorkout(id) {
+      selectedWorkout = id;
       currentPage = 'countdown';
       startCountdown();
     }
@@ -324,14 +281,6 @@
 
     function finishWorkout() {
       sessionActive = false;
-      currentPage = 'landing';
-      sessionTime = 0;
-      render();
-    }
-
-    function completeWorkout() {
-      sessionActive = false;
-      workoutCount++;
       currentPage = 'landing';
       sessionTime = 0;
       render();
