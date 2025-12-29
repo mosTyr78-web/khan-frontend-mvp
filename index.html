@@ -22,17 +22,128 @@
     let countdownValue = 10;
 
     const workouts = [
-      { id: 1, name: "Détente & Wellness", type: "mindfulness", duration: 45, difficulty: "Beginner", icon: "🧘", color: "from-green-400 to-teal-500", phases: ["Breathing Setup", "Mobility Flow", "Core Stability", "Meditation"] },
-      { id: 2, name: "Vélo Salle - Nature Rhythms", type: "cardio", duration: 45, difficulty: "Intermediate", icon: "🚴", color: "from-blue-400 to-cyan-500", phases: ["Warm-up", "Interval 1", "Interval 2", "Climax", "Cool-down"] },
-      { id: 3, name: "Lower Body Blast", type: "strength", duration: 45, difficulty: "Intermediate", icon: "🦵", color: "from-pink-400 to-red-500", phases: ["Glutes Burn", "Abs Fire", "Arms Pump", "Finisher"] },
-      { id: 4, name: "Shadow Boxing Mastery", type: "boxing", duration: 45, difficulty: "Intermediate", icon: "🥊", color: "from-yellow-400 to-orange-500", phases: ["Stance Work", "Combos", "Speed Drills", "Intensity Peak"] },
-      { id: 5, name: "Pure Jambes Power", type: "strength", duration: 45, difficulty: "Advanced", icon: "⚡", color: "from-purple-400 to-pink-500", phases: ["Squat Pyramid", "Leg Press", "Calf Torture", "Sprint Finish"] },
-      { id: 6, name: "Pure Cardio Endurance", type: "cardio", duration: 45, difficulty: "Advanced", icon: "🔥", color: "from-red-400 to-orange-500", phases: ["Treadmill Push", "Jump Rope Blitz", "Rowing Power", "Stair Sprint"] },
-      { id: 7, name: "Calisthenics Beast", type: "calisthenics", duration: 45, difficulty: "Advanced", icon: "💪", color: "from-indigo-400 to-purple-500", phases: ["Muscle-up Progression", "Handstand Hold", "Pistol Squat", "Planche Push"] },
-      { id: 8, name: "Running with Objectives", type: "running", duration: 45, difficulty: "Intermediate", icon: "🏃", color: "from-green-400 to-emerald-500", phases: ["Easy Pace", "Tempo Push", "Hill Attack", "Sprint Finish"] },
-      { id: 9, name: "Random Objective Challenge", type: "challenge", duration: 45, difficulty: "Variable", icon: "🎯", color: "from-yellow-400 to-yellow-500", phases: ["Challenge Loaded", "GO!", "Push Harder", "Victory"] },
-      { id: 10, name: "Fat Loss Protocol", type: "hiit", duration: 45, difficulty: "Advanced", icon: "🔥", color: "from-red-500 to-pink-500", phases: ["Cardio Burst", "Weight Circuit", "No Rest", "Metabolism Spike"] },
-      { id: 11, name: "🤖 AI Coach - Smart Training", type: "ai", duration: 45, difficulty: "AI-Powered", icon: "🤖", color: "from-cyan-400 to-blue-500", phases: ["AI Analyzing...", "Personalized Plan", "Real-time Adjustment", "Smart Progression"], premium: true }
+      { 
+        id: 1, 
+        name: "Détente & Wellness", 
+        type: "mindfulness", 
+        duration: 45, 
+        difficulty: "Beginner", 
+        icon: "🧘", 
+        color: "from-green-400 to-teal-500", 
+        phases: ["Breathing Setup", "Mobility Flow", "Core Stability", "Meditation"],
+        exercises: ["Deep breathing: 10min", "Neck & shoulder mobility", "Spine stretches", "Hip flexibility", "Core engages", "Body scan meditation", "Gratitude reflection"]
+      },
+      { 
+        id: 2, 
+        name: "Vélo Salle - Nature Rhythms", 
+        type: "cardio", 
+        duration: 45, 
+        difficulty: "Intermediate", 
+        icon: "🚴", 
+        color: "from-blue-400 to-cyan-500", 
+        phases: ["Warm-up", "Interval 1", "Interval 2", "Climax", "Cool-down"],
+        exercises: ["5min easy pace", "3min hard / 1min easy x5", "2min very hard", "1min recovery", "5min cool-down", "Stretch & breathe"]
+      },
+      { 
+        id: 3, 
+        name: "Lower Body Blast", 
+        type: "strength", 
+        duration: 45, 
+        difficulty: "Intermediate", 
+        icon: "🦵", 
+        color: "from-pink-400 to-red-500", 
+        phases: ["Glutes Burn", "Abs Fire", "Arms Pump", "Finisher"],
+        exercises: ["15x Glute bridges", "20x Bulgarian split squats", "25x Jump squats", "20x Crunches", "30 sec plank", "15x Tricep dips", "20x Push-ups", "All-out sprint finisher"]
+      },
+      { 
+        id: 4, 
+        name: "Shadow Boxing Mastery", 
+        type: "boxing", 
+        duration: 45, 
+        difficulty: "Intermediate", 
+        icon: "🥊", 
+        color: "from-yellow-400 to-orange-500", 
+        phases: ["Stance Work", "Combos", "Speed Drills", "Intensity Peak"],
+        exercises: ["Proper stance x5min", "Jab-cross combos", "Hook-uppercut precision", "Speed punch rounds", "Heavy breathing drills", "Footwork circuits", "Final round intensity"]
+      },
+      { 
+        id: 5, 
+        name: "Pure Jambes Power", 
+        type: "strength", 
+        duration: 45, 
+        difficulty: "Advanced", 
+        icon: "⚡", 
+        color: "from-purple-400 to-pink-500", 
+        phases: ["Squat Pyramid", "Leg Press", "Calf Torture", "Sprint Finish"],
+        exercises: ["Barbell squats: 5,5,5,3,3,1,1", "Leg press: 4x8", "Romanian deadlifts", "Leg curls: 3x12", "Calf raises: 4x15", "50m sprint", "Rest & recover"]
+      },
+      { 
+        id: 6, 
+        name: "Pure Cardio Endurance", 
+        type: "cardio", 
+        duration: 45, 
+        difficulty: "Advanced", 
+        icon: "🔥", 
+        color: "from-red-400 to-orange-500", 
+        phases: ["Treadmill Push", "Jump Rope Blitz", "Rowing Power", "Stair Sprint"],
+        exercises: ["10min treadmill at 80%", "3min jump rope", "5min rowing machine max", "2min stair sprints", "1min rest", "Repeat x2", "Final cool-down"]
+      },
+      { 
+        id: 7, 
+        name: "Calisthenics Beast", 
+        type: "calisthenics", 
+        duration: 45, 
+        difficulty: "Advanced", 
+        icon: "💪", 
+        color: "from-indigo-400 to-purple-500", 
+        phases: ["Muscle-up Progression", "Handstand Hold", "Pistol Squat", "Planche Push"],
+        exercises: ["Muscle-up progressions x10", "Hold handstand x20sec", "Pistol squats x5 each leg", "Push-up variations x20", "L-sit hold x15sec", "Dip progression x15", "Core finisher"]
+      },
+      { 
+        id: 8, 
+        name: "Running with Objectives", 
+        type: "running", 
+        duration: 45, 
+        difficulty: "Intermediate", 
+        icon: "🏃", 
+        color: "from-green-400 to-emerald-500", 
+        phases: ["Easy Pace", "Tempo Push", "Hill Attack", "Sprint Finish"],
+        exercises: ["3km easy warm-up", "2km tempo pace", "5x hill repeats", "8x 200m sprints", "2km cool-down run", "Stretch thoroughly"]
+      },
+      { 
+        id: 9, 
+        name: "Random Objective Challenge", 
+        type: "challenge", 
+        duration: 45, 
+        difficulty: "Variable", 
+        icon: "🎯", 
+        color: "from-yellow-400 to-yellow-500", 
+        phases: ["Challenge Loaded", "GO!", "Push Harder", "Victory"],
+        exercises: ["20 push-ups in <12sec", "50 burpees for time", "100 jump jacks", "40 mountain climbers", "30 box jumps", "Leaderboard tracking", "Daily randomized challenges"]
+      },
+      { 
+        id: 10, 
+        name: "Fat Loss Protocol", 
+        type: "hiit", 
+        duration: 45, 
+        difficulty: "Advanced", 
+        icon: "🔥", 
+        color: "from-red-500 to-pink-500", 
+        phases: ["Cardio Burst", "Weight Circuit", "No Rest", "Metabolism Spike"],
+        exercises: ["40sec burpees / 20sec rest", "40sec jump squats / 20sec rest", "40sec mountain climbers / 20sec rest", "40sec push-ups / 20sec rest", "Repeat x3 rounds", "Metabolism boost guaranteed"]
+      },
+      { 
+        id: 11, 
+        name: "🤖 AI Coach - Smart Training", 
+        type: "ai", 
+        duration: 45, 
+        difficulty: "AI-Powered", 
+        icon: "🤖", 
+        color: "from-cyan-400 to-blue-500", 
+        phases: ["AI Analyzing...", "Personalized Plan", "Real-time Adjustment", "Smart Progression"],
+        exercises: ["AI scans your fitness level", "Builds custom plan", "Adjusts in real-time", "Form correction", "Progressive overload", "Recovery recommendations", "Next session planning"],
+        premium: true 
+      }
     ];
 
     const coachingMessages = {
@@ -127,7 +238,7 @@
         
         workouts.forEach(w => {
           const locked = w.premium && workoutCount < 3;
-          const lockHTML = locked ? '<div class="absolute top-4 right-4 text-2xl">🔒</div><div class="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl"><p class="text-sm text-center">Upgrade to unlock<br/>AI Coach</p></div>' : '';
+          const lockHTML = locked ? '<div class="absolute top-4 right-4 text-2xl">🔒</div>' : '';
           
           workoutHTML += `
             <button onclick="selectWorkout(${w.id})" class="relative border-2 border-gray-700 hover:border-orange-400 rounded-xl p-6 text-left bg-gradient-to-br ${w.color}/10 hover:${w.color}/20 transition transform hover:scale-105 group">
@@ -142,6 +253,35 @@
         
         workoutHTML += '</div></div>';
         app.innerHTML = workoutHTML;
+      } else if (currentPage === 'workout-details') {
+        const w = workouts.find(x => x.id === selectedWorkout);
+        
+        let exerciseHTML = w.exercises.map(e => `<li class="text-sm text-gray-300 flex items-center gap-2"><span class="text-orange-400">•</span> ${e}</li>`).join('');
+        
+        app.innerHTML = `
+          <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white px-6 py-12">
+            <button onclick="goBack()" class="text-gray-400 mb-8 hover:text-orange-400">← Back</button>
+            
+            <div class="max-w-2xl mx-auto space-y-8">
+              <div class="text-center">
+                <h1 class="text-5xl mb-4">${w.icon}</h1>
+                <h2 class="text-4xl font-black bg-gradient-to-r ${w.color} bg-clip-text text-transparent">${w.name}</h2>
+                <p class="text-gray-400 mt-4">${w.difficulty} • ${w.duration}min</p>
+              </div>
+              
+              <div class="bg-gray-900/50 rounded-xl p-8 border border-gray-700">
+                <h3 class="text-2xl font-black mb-6 text-orange-400">What You'll Do</h3>
+                <ul class="space-y-3">
+                  ${exerciseHTML}
+                </ul>
+              </div>
+              
+              <button onclick="startCountdown()" class="w-full py-6 rounded-xl font-black text-2xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105">
+                🚀 Start Workout
+              </button>
+            </div>
+          </div>
+        `;
       } else if (currentPage === 'countdown') {
         const w = workouts.find(x => x.id === selectedWorkout);
         
@@ -155,7 +295,7 @@
               <div class="relative">
                 <div class="absolute inset-0 bg-gradient-to-r ${w.color} blur-3xl opacity-50"></div>
                 <div class="relative text-9xl font-black text-white animate-pulse">
-                  ${countdownValue > 0 ? countdownValue : '🚀 GO!'}
+                  ${countdownValue > 0 ? countdownValue : '🚀'}
                 </div>
               </div>
               
@@ -338,8 +478,7 @@
         return;
       }
       selectedWorkout = id;
-      currentPage = 'countdown';
-      startCountdown();
+      currentPage = 'workout-details';
       render();
     }
 
