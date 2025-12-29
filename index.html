@@ -18,6 +18,8 @@
     let sessionTime = 0;
     let sessionActive = false;
     let workoutPhase = 0;
+    let countdownActive = false;
+    let countdownValue = 10;
 
     const workouts = [
       { id: 1, name: "Détente & Wellness", type: "mindfulness", duration: 45, difficulty: "Beginner", icon: "🧘", color: "from-green-400 to-teal-500", phases: ["Breathing Setup", "Mobility Flow", "Core Stability", "Meditation"] },
@@ -55,6 +57,26 @@
       return messages[Math.floor(Math.random() * messages.length)];
     }
 
+    function startCountdown() {
+      countdownActive = true;
+      countdownValue = 10;
+      updateCountdown();
+    }
+
+    function updateCountdown() {
+      if (!countdownActive) return;
+      
+      if (countdownValue > 0) {
+        countdownValue--;
+        setTimeout(updateCountdown, 1000);
+      } else {
+        countdownActive = false;
+        startSessionTimer();
+      }
+      
+      render();
+    }
+
     function startSessionTimer() {
       sessionActive = true;
       sessionTime = 0;
@@ -65,9 +87,9 @@
       if (!sessionActive) return;
       
       sessionTime++;
-      workoutPhase = Math.floor(sessionTime / 10); // Change phase every 10 seconds
+      workoutPhase = Math.floor(sessionTime / 10);
       
-      if (sessionTime < 2700) { // 45 minutes
+      if (sessionTime < 2700) {
         setTimeout(updateSession, 1000);
       } else {
         sessionActive = false;
@@ -120,6 +142,29 @@
         
         workoutHTML += '</div></div>';
         app.innerHTML = workoutHTML;
+      } else if (currentPage === 'countdown') {
+        const w = workouts.find(x => x.id === selectedWorkout);
+        
+        app.innerHTML = `
+          <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white flex flex-col items-center justify-center px-6">
+            <div class="text-center space-y-12">
+              <h1 class="text-5xl font-black bg-gradient-to-r ${w.color} bg-clip-text text-transparent">${w.name}</h1>
+              
+              <p class="text-3xl text-gray-400 font-bold">Are you ready?</p>
+              
+              <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r ${w.color} blur-3xl opacity-50"></div>
+                <div class="relative text-9xl font-black text-white animate-pulse">
+                  ${countdownValue > 0 ? countdownValue : '🚀 GO!'}
+                </div>
+              </div>
+              
+              <p class="text-xl text-orange-400 font-bold">
+                ${countdownValue > 0 ? '⏳ Get ready to push!' : '💪 Let\'s get it!'}
+              </p>
+            </div>
+          </div>
+        `;
       } else if (currentPage === 'workout-active') {
         const w = workouts.find(x => x.id === selectedWorkout);
         const progress = Math.min(100, (sessionTime / 2700) * 100);
@@ -132,35 +177,28 @@
             <button onclick="finishWorkout()" class="text-gray-400 mb-8 hover:text-orange-400 self-start">← Exit</button>
             
             <div class="flex-1 flex flex-col items-center justify-center space-y-8 max-w-2xl mx-auto">
-              <!-- Big Icon -->
               <div class="text-9xl animate-pulse">${w.icon}</div>
               
-              <!-- Workout Name -->
               <h1 class="text-5xl font-black text-center bg-gradient-to-r ${w.color} bg-clip-text text-transparent">${w.name}</h1>
               
-              <!-- Timer -->
               <div class="text-7xl font-black tabular-nums">${formatTime(sessionTime)}</div>
               
-              <!-- Progress Bar -->
               <div class="w-full max-w-md">
                 <div class="bg-gray-800 rounded-full h-2 overflow-hidden">
                   <div class="bg-gradient-to-r ${w.color} h-full transition-all" style="width: ${progress}%"></div>
                 </div>
               </div>
               
-              <!-- Phase Display -->
               <div class="text-center">
                 <p class="text-sm text-gray-400 mb-2">Current Phase</p>
                 <p class="text-3xl font-black text-orange-400">${phase}</p>
               </div>
               
-              <!-- Coaching Message (Animated) -->
               <div class="text-center space-y-4">
                 <p class="text-2xl font-bold text-yellow-400 animate-bounce">${coaching}</p>
                 <p class="text-sm text-gray-400">${w.difficulty} • ${w.duration}min program</p>
               </div>
               
-              <!-- Action Button -->
               ${!isCompleted ? `
                 <button onclick="continueWorkout()" class="px-12 py-4 rounded-xl font-black text-xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105">
                   💪 Keep Going
@@ -172,7 +210,6 @@
               `}
             </div>
             
-            <!-- Stats Footer -->
             <div class="mt-12 grid grid-cols-3 gap-4 text-center border-t border-gray-700 pt-8">
               <div>
                 <p class="text-gray-400 text-sm">Intensity</p>
@@ -301,8 +338,8 @@
         return;
       }
       selectedWorkout = id;
-      currentPage = 'workout-active';
-      startSessionTimer();
+      currentPage = 'countdown';
+      startCountdown();
       render();
     }
 
@@ -346,6 +383,7 @@
 
     function goBack() {
       sessionActive = false;
+      countdownActive = false;
       currentPage = 'landing';
       workoutCount = 0;
       selectedTier = null;
@@ -353,6 +391,7 @@
       selectedWorkout = null;
       sessionTime = 0;
       workoutPhase = 0;
+      countdownValue = 10;
       render();
     }
 
