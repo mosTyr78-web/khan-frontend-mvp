@@ -19,6 +19,27 @@
     let countdownActive = false;
     let countdownValue = 10;
 
+    const amazonTag = 'khanthefitapp-21';
+
+    const equipment = {
+      hiit: [
+        { name: 'Yoga Mat', url: `https://www.amazon.com/s?k=yoga+mat&tag=${amazonTag}` },
+        { name: 'Jump Rope', url: `https://www.amazon.com/s?k=jump+rope&tag=${amazonTag}` },
+        { name: 'Resistance Bands', url: `https://www.amazon.com/s?k=resistance+bands&tag=${amazonTag}` }
+      ],
+      strength: [
+        { name: 'Dumbbells Set', url: `https://www.amazon.com/s?k=adjustable+dumbbells&tag=${amazonTag}` },
+        { name: 'Barbell', url: `https://www.amazon.com/s?k=barbell+set&tag=${amazonTag}` },
+        { name: 'Weight Bench', url: `https://www.amazon.com/s?k=weight+bench&tag=${amazonTag}` },
+        { name: 'Pull-up Bar', url: `https://www.amazon.com/s?k=pull+up+bar&tag=${amazonTag}` }
+      ],
+      cardio: [
+        { name: 'Running Shoes', url: `https://www.amazon.com/s?k=running+shoes&tag=${amazonTag}` },
+        { name: 'Bluetooth Headphones', url: `https://www.amazon.com/s?k=wireless+headphones&tag=${amazonTag}` },
+        { name: 'Sports Watch', url: `https://www.amazon.com/s?k=sports+watch+fitness&tag=${amazonTag}` }
+      ]
+    };
+
     const workouts = [
       { 
         id: 1, 
@@ -186,7 +207,7 @@
                 <p class="text-xl text-gray-400">Professional Fitness Coach</p>
               </div>
 
-              <div class="space-y-4">
+              <div class="space-y-4 mb-12">
                 ${workouts.map(w => `
                   <button onclick="selectWorkout(${w.id})" class="w-full p-6 rounded-xl border-2 border-gray-700 hover:border-orange-400 bg-gradient-to-br ${w.color}/10 transition transform hover:scale-102 text-left">
                     <div class="flex items-center justify-between">
@@ -200,8 +221,50 @@
                 `).join('')}
               </div>
 
+              <!-- EQUIPMENT RECOMMENDATIONS -->
+              <div class="bg-gray-900/50 rounded-xl border border-gray-700 p-8 mb-12">
+                <h2 class="text-2xl font-black mb-6">Recommended Equipment</h2>
+                
+                <div class="space-y-6">
+                  <div>
+                    <p class="text-lg font-bold text-red-400 mb-3">HIIT Training</p>
+                    <div class="flex flex-wrap gap-3">
+                      ${equipment.hiit.map(item => `
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-lg border border-gray-600 hover:border-orange-400 text-sm font-bold transition">
+                          ${item.name} →
+                        </a>
+                      `).join('')}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p class="text-lg font-bold text-orange-400 mb-3">Strength Training</p>
+                    <div class="flex flex-wrap gap-3">
+                      ${equipment.strength.map(item => `
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-lg border border-gray-600 hover:border-orange-400 text-sm font-bold transition">
+                          ${item.name} →
+                        </a>
+                      `).join('')}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p class="text-lg font-bold text-blue-400 mb-3">Cardio</p>
+                    <div class="flex flex-wrap gap-3">
+                      ${equipment.cardio.map(item => `
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-lg border border-gray-600 hover:border-orange-400 text-sm font-bold transition">
+                          ${item.name} →
+                        </a>
+                      `).join('')}
+                    </div>
+                  </div>
+                </div>
+
+                <p class="text-xs text-gray-500 mt-6">As an Amazon Associate, we earn from qualifying purchases</p>
+              </div>
+
               <!-- ADSENSE BANNER -->
-              <div class="mt-12 text-center">
+              <div class="text-center">
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-7675533486619158"
