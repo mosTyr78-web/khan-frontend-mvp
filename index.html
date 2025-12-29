@@ -17,131 +17,120 @@
     let selectedWorkout = null;
     let sessionTime = 0;
     let sessionActive = false;
-    let workoutPhase = 0;
     let countdownActive = false;
     let countdownValue = 10;
 
     const workouts = [
       { 
         id: 1, 
-        name: "Détente & Wellness", 
-        type: "mindfulness", 
-        duration: 45, 
-        difficulty: "Beginner", 
-        icon: "🧘", 
-        color: "from-green-400 to-teal-500", 
-        exercises: ["Deep breathing: 10min", "Neck & shoulder mobility", "Spine stretches", "Hip flexibility", "Core engages", "Body scan meditation", "Gratitude reflection"],
-        objectives: [
-          { time: 0, duration: 300, command: "🧘 SIT DOWN IN YOGA POSE", instruction: "Find a comfortable seated position. Keep your spine straight. Relax your shoulders.", phase: "Breathing Setup" },
-          { time: 300, duration: 300, command: "🫁 DEEP BREATHING - 5 MINUTES", instruction: "Inhale for 4 counts. Hold for 4 counts. Exhale for 4 counts. Feel your body relax.", phase: "Breathing Setup" },
-          { time: 600, duration: 90, command: "😌 REST & TRANSITION", instruction: "Stay seated. Let your mind settle. Notice your breath.", phase: "Breathing Setup" },
-          { time: 690, duration: 300, command: "💪 NECK & SHOULDER MOBILITY", instruction: "Slow neck rolls. Shoulder shrugs. Arm circles. Move with control.", phase: "Mobility Flow" },
-          { time: 990, duration: 300, command: "🔄 SPINE STRETCHES", instruction: "Forward fold. Twist your torso left & right. Cat-cow stretches. Hold each 5-10 seconds.", phase: "Mobility Flow" },
-          { time: 1290, duration: 300, command: "🦵 HIP FLEXIBILITY", instruction: "Butterfly pose. Hip circles. Gentle lunges. Breathe deeply into each stretch.", phase: "Core Stability" },
-          { time: 1590, duration: 300, command: "💪 CORE ENGAGES - PLANKING", instruction: "Come to plank position. Engage your core. Hold for 20 seconds. Rest 10 seconds. Repeat 3x", phase: "Core Stability" },
-          { time: 1890, duration: 600, command: "🧠 BODY SCAN MEDITATION", instruction: "Close your eyes. Start from your toes. Slowly scan up to your head. Release tension everywhere.", phase: "Meditation" },
-          { time: 2490, duration: 210, command: "🙏 GRATITUDE MOMENT", instruction: "Think of 3 things you're grateful for. Feel the emotion. Breathe it in.", phase: "Meditation" }
-        ]
-      },
-      { 
-        id: 2, 
-        name: "Upper Body Powerhouse", 
-        type: "strength", 
-        duration: 45, 
-        difficulty: "Advanced", 
-        icon: "💪", 
-        color: "from-orange-400 to-amber-500", 
-        exercises: ["Barbell bench press: 4x6", "Dumbbell flyes: 3x10", "Incline push-ups: 3x12", "Dumbbell shoulder press: 4x8", "Lateral raises: 3x12", "Face pulls: 3x15", "Barbell rows: 4x6", "Weighted dips: 3x8", "Barbell curls: 3x10"],
-        objectives: [
-          { time: 0, duration: 300, command: "🏋️ WARM-UP - LIGHT CARDIO", instruction: "5 min light jogging or rowing. Get your heart pumping. Prepare your shoulders.", phase: "Chest Ignition" },
-          { time: 300, duration: 300, command: "🏋️ BARBELL BENCH PRESS - 4x6 REPS", instruction: "Set weight moderate. Lower bar to chest. Explode up. Rest 2 min between sets. FEEL THE POWER!", phase: "Chest Ignition" },
-          { time: 600, duration: 180, command: "💫 DUMBBELL FLYES - 3x10", instruction: "Light weight. Stretch across your chest. Full range of motion. SQUEEZE at the top. 1 min rest.", phase: "Chest Ignition" },
-          { time: 780, duration: 180, command: "💪 INCLINE PUSH-UPS - 3x12", instruction: "Hands on elevated surface. Lower chest down. Push explosively. NO REST BETWEEN SETS!", phase: "Chest Ignition" },
-          { time: 960, duration: 240, command: "🔥 DUMBBELL SHOULDER PRESS - 4x8", instruction: "Sit or stand. Press dumbbells overhead. Control the descent. POWER MOVE. Rest 90 sec.", phase: "Shoulder Peaks" },
-          { time: 1200, duration: 180, command: "✨ LATERAL RAISES - 3x12", instruction: "Light dumbbells. Raise arms to shoulder height. Slow & controlled. BURN THAT SHOULDER!", phase: "Shoulder Peaks" },
-          { time: 1380, duration: 180, command: "🎯 FACE PULLS - 3x15", instruction: "High cable. Pull to face. Spread rope wide. Full contraction. PERFECT FORM!", phase: "Shoulder Peaks" },
-          { time: 1560, duration: 240, command: "🔥 BARBELL ROWS - 4x6", instruction: "Heavy weight. Pull explosively. Chest to bar. Feel your back. REST 2 min. THIS IS STRENGTH!", phase: "Back Thickness" },
-          { time: 1800, duration: 180, command: "💪 WEIGHTED DIPS - 3x8", instruction: "Add weight belt. Lower body below parallel. Drive up with power. REST 90 sec.", phase: "Back Thickness" },
-          { time: 1980, duration: 180, command: "💪 BARBELL CURLS - 3x10", instruction: "Strict form. No swinging. Curl to peak contraction. Hold 1 second. PUMP THOSE ARMS!", phase: "Arms Finale" },
-          { time: 2160, duration: 540, command: "🧘 COOL DOWN & STRETCH", instruction: "Light stretching. Chest, shoulders, arms. Breathe. You crushed it! 💪", phase: "Arms Finale" }
-        ]
-      },
-      { 
-        id: 3, 
         name: "Fat Loss Protocol", 
         type: "hiit", 
         duration: 45, 
         difficulty: "Advanced", 
         icon: "🔥", 
         color: "from-red-500 to-pink-500", 
-        exercises: ["40sec burpees / 20sec rest", "40sec jump squats / 20sec rest", "40sec mountain climbers / 20sec rest", "40sec push-ups / 20sec rest"],
+        exercises: ["Burpees", "Jump Squats", "Mountain Climbers", "Push-ups"],
         objectives: [
-          { time: 0, duration: 300, command: "🏃 WARM-UP CARDIO", instruction: "5 minutes of light jogging, jumping jacks, arm circles. Get your body ready for WAR.", phase: "Cardio Burst" },
-          { time: 300, duration: 40, command: "💥 BURPEES - 40 SECONDS GO!", instruction: "NO BREAKS. Full speed. Jump down, push-up, jump up. MAXIMUM INTENSITY!", phase: "Cardio Burst" },
-          { time: 340, duration: 20, command: "😮‍💨 REST - 20 SECONDS", instruction: "Breathe. Catch your breath. Prepare for next round.", phase: "Cardio Burst" },
-          { time: 360, duration: 40, command: "💥 JUMP SQUATS - 40 SECONDS GO!", instruction: "Explosive! Air before you land. FEEL THE BURN IN YOUR LEGS!", phase: "Cardio Burst" },
-          { time: 400, duration: 20, command: "😮‍💨 REST - 20 SECONDS", instruction: "Heavy breathing. You're doing great.", phase: "Cardio Burst" },
-          { time: 420, duration: 40, command: "💥 MOUNTAIN CLIMBERS - 40 SECONDS GO!", instruction: "Fast feet. Drive knees to chest. CARDIO AT ITS PEAK!", phase: "Weight Circuit" },
-          { time: 460, duration: 20, command: "😮‍💨 REST - 20 SECONDS", instruction: "Breathe. You're unstoppable.", phase: "Weight Circuit" },
-          { time: 480, duration: 40, command: "💥 PUSH-UPS - 40 SECONDS GO!", instruction: "Full range. Lower to chest. Push hard. STRENGTH & CARDIO COMBINED!", phase: "Weight Circuit" },
-          { time: 520, duration: 20, command: "😮‍💨 REST - 20 SECONDS", instruction: "Almost done with round 1.", phase: "Weight Circuit" },
-          { time: 540, duration: 1440, command: "🔁 REPEAT ROUNDS 2 & 3 WITH INTENSITY", instruction: "You know what to do. PUSH HARDER EACH ROUND. Show no mercy!", phase: "No Rest" },
-          { time: 1980, duration: 300, command: "🧘 COOL DOWN & STRETCH", instruction: "Walk it out. Light stretching. You just BURNED CALORIES like a BEAST! 🔥", phase: "Metabolism Spike" }
-        ]
-      },
-      { 
-        id: 4, 
-        name: "Lower Body Blast", 
-        type: "strength", 
-        duration: 45, 
-        difficulty: "Intermediate", 
-        icon: "🦵", 
-        color: "from-pink-400 to-red-500", 
-        exercises: ["15x Glute bridges", "20x Bulgarian split squats", "25x Jump squats", "20x Crunches", "30 sec plank"],
-        objectives: [
-          { time: 0, duration: 180, command: "🏋️ WARM-UP TIME", instruction: "Light cardio 3 min. Get the blood flowing to your legs.", phase: "Glutes Burn" },
-          { time: 180, duration: 120, command: "🍑 GLUTE BRIDGES - 15 REPS", instruction: "Squeeze at the top. Feel your glutes CONTRACT. 3 sets with 30 sec rest.", phase: "Glutes Burn" },
-          { time: 300, duration: 120, command: "💪 BULGARIAN SPLIT SQUATS - 20 REPS", instruction: "Back leg elevated. Lower down. Push through front heel. BURN BABY BURN.", phase: "Glutes Burn" },
-          { time: 420, duration: 120, command: "🔥 JUMP SQUATS - 25 REPS", instruction: "Explosive! Air time on every rep. Land soft. 2 sets non-stop!", phase: "Glutes Burn" },
-          { time: 540, duration: 120, command: "🫀 CRUNCHES - 20 REPS", instruction: "Slow & controlled. Feel your abs. 3 sets with 20 sec rest.", phase: "Abs Fire" },
-          { time: 660, duration: 30, command: "💪 PLANK HOLD - 30 SECONDS", instruction: "Perfect form. Engage core. Don't let hips drop. HOLD IT!", phase: "Abs Fire" },
-          { time: 690, duration: 90, command: "😮‍💨 REST & TRANSITION", instruction: "Catch your breath. You're crushing it.", phase: "Arms Pump" },
-          { time: 780, duration: 1920, command: "🔁 REPEAT ALL CIRCUITS 2 MORE TIMES", instruction: "Increase intensity each round. PUSH YOURSELF TO THE LIMIT!", phase: "Finisher" }
-        ]
-      },
-      { 
-        id: 5, 
-        name: "Running with Objectives", 
-        type: "running", 
-        duration: 45, 
-        difficulty: "Intermediate", 
-        icon: "🏃", 
-        color: "from-green-400 to-emerald-500", 
-        exercises: ["3km easy warm-up", "2km tempo pace", "5x hill repeats", "8x 200m sprints"],
-        objectives: [
-          { time: 0, duration: 900, command: "🏃 EASY WARM-UP - 3KM", instruction: "Comfortable pace. Get your legs warm. Breathing steady. Let's go!", phase: "Easy Pace" },
-          { time: 900, duration: 600, command: "⚡ TEMPO PACE - 2KM", instruction: "Pick up speed. Challenging but sustainable. PUSH IT!", phase: "Tempo Push" },
-          { time: 1500, duration: 600, command: "🏔️ HILL REPEATS - 5x", instruction: "Find a hill. Sprint up. Walk down. Repeat 5 times. LEGS ON FIRE!", phase: "Hill Attack" },
-          { time: 2100, duration: 480, command: "🚀 SPRINT FINISHER - 8x 200M", instruction: "All out sprints. 200m fast, 100m recovery. 8 rounds. LAST ONE ALL GAS!", phase: "Sprint Finish" },
-          { time: 2580, duration: 120, command: "🧘 COOL DOWN - 2KM EASY", instruction: "Slow jog. Let your heart rate drop. Breathe. You CRUSHED IT!", phase: "Sprint Finish" }
-        ]
-      },
-      { 
-        id: 6, 
-        name: "Shadow Boxing Mastery", 
-        type: "boxing", 
-        duration: 45, 
-        difficulty: "Intermediate", 
-        icon: "🥊", 
-        color: "from-yellow-400 to-orange-500", 
-        exercises: ["Jab-cross combos", "Hook-uppercut precision", "Speed punch rounds"],
-        objectives: [
-          { time: 0, duration: 300, command: "🥊 STANCE & FOOTWORK", instruction: "Perfect stance. Feet shoulder-width. Knees bent. Move with grace. 5 minutes.", phase: "Stance Work" },
-          { time: 300, duration: 300, command: "👊 JAB-CROSS COMBOS", instruction: "Jab with left. Follow with right cross. Snap it back. 5 minutes continuous.", phase: "Combos" },
-          { time: 600, duration: 300, command: "🎯 HOOK-UPPERCUT PRECISION", instruction: "Hook to body. Uppercut follows. Power from hips. Practice technique. 5 minutes.", phase: "Combos" },
-          { time: 900, duration: 600, command: "⚡ SPEED PUNCH ROUNDS", instruction: "Maximum speed. Light hands. Fast combinations. 10 minutes of speed work.", phase: "Speed Drills" },
-          { time: 1500, duration: 600, command: "🔥 INTENSITY PEAK - GO ALL OUT", instruction: "Combine everything. Power. Speed. Footwork. 10 minute final round. CHAMPION MODE!", phase: "Intensity Peak" },
-          { time: 2100, duration: 300, command: "🧘 COOL DOWN", instruction: "Slow shadow boxing. Breathing. Stretch. You're a FIGHTER! 💪", phase: "Intensity Peak" }
+          { 
+            time: 0, 
+            duration: 300, 
+            exercise: "🔥 WARM-UP",
+            reps: "5 MINUTES",
+            command: "Get Your Body Ready",
+            instruction: "Light jogging in place. Arm circles. Jumping jacks. Get your heart pumping. NO STOPPING.",
+            visual: "🏃🏃🏃",
+            details: "• Light pace\n• Loose movements\n• Deep breathing"
+          },
+          { 
+            time: 300, 
+            duration: 40, 
+            exercise: "💥 BURPEES",
+            reps: "40 SECONDS - GO!",
+            command: "MAXIMUM SPEED",
+            instruction: "POSITION: Stand tall. MOVE: Drop to plank → Push-up → Jump feet back → Jump UP with hands overhead. REPEAT NON-STOP.",
+            visual: "🏃↓💪↑🙌",
+            details: "• Full range motion\n• No rest\n• Land soft on jump\n• Power from legs"
+          },
+          { 
+            time: 340, 
+            duration: 20, 
+            exercise: "😮‍💨 REST",
+            reps: "20 SECONDS",
+            command: "BREATHE HARD",
+            instruction: "Heavy breathing. Hands on knees. Prepare for next round. You're CRUSHING it!",
+            visual: "😤💨💨",
+            details: "• Catch your breath\n• Shake out legs\n• Mental prep"
+          },
+          { 
+            time: 360, 
+            duration: 40, 
+            exercise: "🦵 JUMP SQUATS",
+            reps: "40 SECONDS - GO!",
+            command: "EXPLOSIVE LEGS",
+            instruction: "POSITION: Feet shoulder-width. MOVE: Squat down → Jump UP as high as possible → Land soft → Repeat. ZERO REST.",
+            visual: "⬇️💪⬆️🙌",
+            details: "• Deep squat\n• Maximum air time\n• Soft landing\n• Drive through heels"
+          },
+          { 
+            time: 400, 
+            duration: 20, 
+            exercise: "😮‍💨 REST",
+            reps: "20 SECONDS",
+            command: "BREATHE",
+            instruction: "Still standing. Keep moving. Light bouncing. Don't sit down. KEEP ENERGY UP.",
+            visual: "🏃💨",
+            details: "• Stay moving\n• Light bouncing\n• 3-2-1 ready"
+          },
+          { 
+            time: 420, 
+            duration: 40, 
+            exercise: "⛰️ MOUNTAIN CLIMBERS",
+            reps: "40 SECONDS - GO!",
+            command: "CARDIO OVERLOAD",
+            instruction: "POSITION: Plank position, hands under shoulders. MOVE: Drive knees to chest FAST alternating. Like running in place. SPEED IS KEY.",
+            visual: "💪🏃💨💨",
+            details: "• Fast pace\n• Knees to chest\n• Keep hips level\n• Explosive motion"
+          },
+          { 
+            time: 460, 
+            duration: 20, 
+            exercise: "😮‍💨 REST",
+            reps: "20 SECONDS",
+            command: "ALMOST DONE",
+            instruction: "You're halfway through Round 1. Shake it out. Get ready for the final move.",
+            visual: "💪😤",
+            details: "• Shake legs\n• Deep breaths\n• Mental focus"
+          },
+          { 
+            time: 480, 
+            duration: 40, 
+            exercise: "💪 PUSH-UPS",
+            reps: "40 SECONDS - GO!",
+            command: "CHEST STRENGTH",
+            instruction: "POSITION: Plank with hands under shoulders. MOVE: Lower chest to ground → Push explosively up. Full range. NO SAGGING.",
+            visual: "💪⬇️⬆️💪",
+            details: "• Full depth\n• Chest touches ground\n• Explosive push\n• Tight core"
+          },
+          { 
+            time: 520, 
+            duration: 1080, 
+            exercise: "🔁 ROUND 2 & 3",
+            reps: "REPEAT ALL 4 EXERCISES",
+            command: "PUSH HARDER EACH ROUND",
+            instruction: "Same exercises. Same timing. But THIS TIME - DO MORE REPS. Push yourself. Each round gets tougher. EMBRACE THE PAIN.",
+            visual: "🔥🔥🔥",
+            details: "• Faster pace\n• More intensity\n• Less rest\n• BEAST MODE"
+          },
+          { 
+            time: 1600, 
+            duration: 300, 
+            exercise: "🧘 COOL DOWN",
+            reps: "5 MINUTES",
+            command: "YOU CRUSHED IT",
+            instruction: "Slow walking. Light stretching. Chest, shoulders, legs. Deep breathing. Heart rate dropping. YOU JUST BURNED MASSIVE CALORIES. CHAMPION.",
+            visual: "🏆😤💪",
+            details: "• Walk it out\n• Stretch chest\n• Stretch legs\n• Victory breath"
+          }
         ]
       }
     ];
@@ -199,7 +188,7 @@
       
       render();
       
-      if (sessionTime < 2700) {
+      if (sessionTime < 1900) {
         setTimeout(updateSession, 1000);
       } else {
         sessionActive = false;
@@ -216,71 +205,16 @@
               <div class="text-7xl animate-pulse">🏋️</div>
               <h1 class="text-6xl font-black bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">KHAN</h1>
               <p class="text-2xl font-bold text-orange-400">AI Fitness Coach</p>
-              <p class="text-xl text-gray-400">Personalized. Immersive. Powerful.</p>
-              <p class="text-gray-500">Try 3 free. Then unlock AI Coach.</p>
+              <p class="text-xl text-gray-400">Real-time coaching. Real results.</p>
+              <p class="text-gray-500">See detailed instructions for every move.</p>
               <button onclick="startWorkout()" class="px-12 py-6 rounded-xl font-black text-xl bg-gradient-to-r from-orange-400 to-red-500 hover:opacity-90 transition transform hover:scale-105">
-                🚀 Start Free Workout
-              </button>
-            </div>
-          </div>
-        `;
-      } else if (currentPage === 'workout-select') {
-        let workoutHTML = `
-          <div class="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white px-6 py-12">
-            <button onclick="goBack()" class="text-gray-400 mb-8 hover:text-orange-400">← Back to Home</button>
-            <h1 class="text-5xl font-black mb-4 bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">Choose Your Challenge</h1>
-            <p class="text-gray-400 mb-12">Workouts: ${workoutCount}/3 free</p>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
-        `;
-        
-        workouts.forEach(w => {
-          const locked = false;
-          const lockHTML = '';
-          
-          workoutHTML += `
-            <button onclick="selectWorkout(${w.id})" class="relative border-2 border-gray-700 hover:border-orange-400 rounded-xl p-6 text-left bg-gradient-to-br ${w.color}/10 hover:${w.color}/20 transition transform hover:scale-105 group">
-              ${lockHTML}
-              <h3 class="text-3xl mb-2">${w.icon}</h3>
-              <h2 class="text-xl font-black mb-2 group-hover:text-orange-400">${w.name}</h2>
-              <p class="text-sm text-gray-400 mb-3">${w.difficulty}</p>
-              <p class="text-xs text-gray-500">⏱️ ${w.duration}min</p>
-            </button>
-          `;
-        });
-        
-        workoutHTML += '</div></div>';
-        app.innerHTML = workoutHTML;
-      } else if (currentPage === 'workout-details') {
-        const w = workouts.find(x => x.id === selectedWorkout);
-        
-        let exerciseHTML = w.exercises.map(e => `<li class="text-sm text-gray-300 flex items-center gap-2"><span class="text-orange-400">•</span> ${e}</li>`).join('');
-        
-        app.innerHTML = `
-          <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white px-6 py-12">
-            <button onclick="goBack()" class="text-gray-400 mb-8 hover:text-orange-400">← Back</button>
-            
-            <div class="max-w-2xl mx-auto space-y-8">
-              <div class="text-center">
-                <h1 class="text-5xl mb-4">${w.icon}</h1>
-                <h2 class="text-4xl font-black bg-gradient-to-r ${w.color} bg-clip-text text-transparent">${w.name}</h2>
-                <p class="text-gray-400 mt-4">${w.difficulty} • ${w.duration}min</p>
-              </div>
-              
-              <div class="bg-gray-900/50 rounded-xl p-8 border border-gray-700">
-                <h3 class="text-2xl font-black mb-6 text-orange-400">What You'll Do</h3>
-                <ul class="space-y-3">
-                  ${exerciseHTML}
-                </ul>
-              </div>
-              
-              <button onclick="startCountdown()" class="w-full py-6 rounded-xl font-black text-2xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105">
-                🚀 Start Workout
+                🚀 Start Fat Loss Protocol
               </button>
             </div>
           </div>
         `;
       } else if (currentPage === 'countdown') {
-        const w = workouts.find(x => x.id === selectedWorkout);
+        const w = workouts[0];
         
         app.innerHTML = `
           <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white flex flex-col items-center justify-center px-6">
@@ -297,170 +231,82 @@
               </div>
               
               <p class="text-xl text-orange-400 font-bold">
-                ${countdownValue > 0 ? '⏳ Get ready to push!' : '💪 Let\'s get it!'}
+                ${countdownValue > 0 ? '⏳ Prepare for MAXIMUM INTENSITY!' : '💪 GO GO GO!'}
               </p>
             </div>
           </div>
         `;
       } else if (currentPage === 'workout-active') {
-        const w = workouts.find(x => x.id === selectedWorkout);
-        const progress = Math.min(100, (sessionTime / 2700) * 100);
-        const objective = getCurrentObjective(selectedWorkout, sessionTime);
-        const isCompleted = sessionTime >= 2700;
+        const w = workouts[0];
+        const progress = Math.min(100, (sessionTime / 1900) * 100);
+        const objective = getCurrentObjective(w.id, sessionTime);
+        const isCompleted = sessionTime >= 1900;
 
         app.innerHTML = `
-          <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white px-6 py-12 flex flex-col">
-            <button onclick="finishWorkout()" class="text-gray-400 mb-4 hover:text-orange-400 self-start">← Exit</button>
+          <div class="min-h-screen bg-gradient-to-br ${w.color}/10 text-white px-6 py-8 flex flex-col overflow-y-auto">
+            <button onclick="finishWorkout()" class="text-gray-400 hover:text-orange-400 self-start mb-4">← Exit</button>
             
-            <div class="flex-1 flex flex-col items-center justify-center space-y-6 max-w-2xl mx-auto">
-              <!-- Big Icon -->
-              <div class="text-8xl animate-pulse">${w.icon}</div>
+            <!-- TIMER & PROGRESS -->
+            <div class="text-center space-y-4 mb-8">
+              <div class="text-7xl font-black tabular-nums">${formatTime(sessionTime)}</div>
+              <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+                <div class="bg-gradient-to-r ${w.color} h-full transition-all" style="width: ${progress}%"></div>
+              </div>
+              <p class="text-sm text-gray-400">Overall Progress: ${Math.round(progress)}% | Remaining: ${formatTime(1900 - sessionTime)}</p>
+            </div>
+
+            <!-- MAIN EXERCISE DISPLAY -->
+            <div class="flex-1 flex flex-col items-center justify-center space-y-8 max-w-3xl mx-auto">
               
-              <!-- Timer -->
-              <div class="text-6xl font-black tabular-nums">${formatTime(sessionTime)}</div>
+              <!-- Visual Emoji -->
+              <div class="text-9xl animate-bounce">${objective.visual}</div>
               
-              <!-- Progress Bar -->
-              <div class="w-full max-w-md">
-                <div class="bg-gray-800 rounded-full h-3 overflow-hidden">
-                  <div class="bg-gradient-to-r ${w.color} h-full transition-all" style="width: ${progress}%"></div>
+              <!-- Exercise Name & Reps -->
+              <div class="text-center space-y-2">
+                <p class="text-5xl font-black text-yellow-400">${objective.exercise}</p>
+                <p class="text-3xl font-bold text-orange-300">${objective.reps}</p>
+              </div>
+
+              <!-- MAIN COMMAND (BIG & BOLD) -->
+              <div class="border-4 border-yellow-400 rounded-2xl p-8 bg-yellow-400/10 w-full text-center space-y-4">
+                <p class="text-5xl font-black text-yellow-400 animate-pulse">${objective.command}</p>
+                <p class="text-2xl text-orange-300 font-bold">${objective.instruction}</p>
+              </div>
+
+              <!-- DETAILED FORM GUIDE -->
+              <div class="bg-gray-800/70 rounded-xl p-6 w-full border border-gray-600">
+                <p class="text-sm text-gray-400 mb-3">📋 FORM CHECKLIST:</p>
+                <div class="text-sm text-gray-300 whitespace-pre-line font-mono leading-relaxed">
+                  ${objective.details}
                 </div>
               </div>
-              
-              <!-- MAIN COMMAND - BIG & BOLD -->
-              <div class="text-center space-y-4 border-4 border-yellow-400 rounded-2xl p-8 bg-yellow-400/10 w-full">
-                <p class="text-5xl font-black text-yellow-400 animate-pulse">${objective.command}</p>
-                <p class="text-xl text-orange-300 font-bold">${objective.instruction}</p>
-              </div>
-              
-              <!-- Phase Info -->
-              <div class="text-center bg-gray-800/50 rounded-xl p-4 w-full">
-                <p class="text-sm text-gray-400">Current Phase</p>
-                <p class="text-2xl font-black text-orange-400">${objective.phase}</p>
-              </div>
-              
-              <!-- Action Button -->
+
+              <!-- ACTION BUTTON -->
               ${!isCompleted ? `
-                <button onclick="continueWorkout()" class="px-12 py-4 rounded-xl font-black text-xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105 mt-4">
-                  💪 Keep Going
+                <button onclick="continueWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r ${w.color} hover:opacity-90 transition transform hover:scale-105 shadow-lg">
+                  💪 KEEP PUSHING
                 </button>
               ` : `
-                <button onclick="completeWorkout()" class="px-12 py-4 rounded-xl font-black text-xl bg-gradient-to-r from-green-400 to-emerald-500 hover:opacity-90 transition transform hover:scale-105 mt-4">
-                  ✅ Workout Complete!
+                <button onclick="completeWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r from-green-400 to-emerald-500 hover:opacity-90 transition transform hover:scale-105 shadow-lg">
+                  🏆 WORKOUT COMPLETE!
                 </button>
               `}
             </div>
-            
-            <!-- Stats Footer -->
+
+            <!-- FOOTER STATS -->
             <div class="mt-8 grid grid-cols-3 gap-4 text-center border-t border-gray-700 pt-6">
               <div>
-                <p class="text-gray-400 text-sm">Difficulty</p>
+                <p class="text-gray-400 text-xs">DIFFICULTY</p>
                 <p class="text-xl font-black text-orange-400">${w.difficulty}</p>
               </div>
               <div>
-                <p class="text-gray-400 text-sm">Progress</p>
-                <p class="text-xl font-black text-green-400">${Math.round(progress)}%</p>
+                <p class="text-gray-400 text-xs">PHASE</p>
+                <p class="text-xl font-black text-blue-400">${Math.ceil(sessionTime / 100)} / 10</p>
               </div>
               <div>
-                <p class="text-gray-400 text-sm">Remaining</p>
-                <p class="text-xl font-black text-blue-400">${formatTime(2700 - sessionTime)}</p>
+                <p class="text-gray-400 text-xs">INTENSITY</p>
+                <p class="text-xl font-black text-red-400">MAX 🔥</p>
               </div>
-            </div>
-          </div>
-        `;
-      } else if (currentPage === 'pricing') {
-        app.innerHTML = `
-          <div class="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white flex items-center justify-center px-6">
-            <div class="max-w-4xl w-full space-y-8">
-              <div class="text-center space-y-4 mb-12">
-                <div class="text-6xl">🎉</div>
-                <h1 class="text-5xl font-black">Workout Complete!</h1>
-                <p class="text-xl text-gray-400">You've unlocked all free workouts.</p>
-                <p class="text-lg text-orange-400 font-bold">Upgrade to unlock AI Coach & unlimited training</p>
-              </div>
-              
-              <div class="grid md:grid-cols-4 gap-4">
-                <div class="border-2 border-gray-700 rounded-xl p-6 bg-gray-900/50">
-                  <h2 class="text-2xl font-black mb-4">Free</h2>
-                  <p class="text-4xl font-black mb-6 text-gray-400">$0</p>
-                  <ul class="space-y-2 mb-6 text-sm">
-                    <li>✓ 6 workouts</li>
-                    <li>✓ Real coaching</li>
-                    <li>✓ Live commands</li>
-                  </ul>
-                  <button onclick="goBack()" class="w-full py-3 rounded-lg border-2 border-gray-700 font-bold hover:border-orange-400">Current</button>
-                </div>
-                
-                <div class="border-2 border-blue-400 rounded-xl p-6 bg-blue-950/30">
-                  <h2 class="text-2xl font-black mb-4 text-blue-400">Starter</h2>
-                  <p class="text-4xl font-black mb-6 text-blue-400">$5.99</p>
-                  <ul class="space-y-2 mb-6 text-sm">
-                    <li>✓ All workouts</li>
-                    <li>✓ No ads</li>
-                    <li>✓ Progress tracking</li>
-                  </ul>
-                  <button onclick="selectTier('STARTER')" class="w-full py-3 rounded-lg border-2 border-blue-400 font-bold hover:bg-blue-400/20">Upgrade</button>
-                </div>
-                
-                <div class="border-2 border-orange-400 rounded-xl p-6 bg-orange-950/30 relative">
-                  <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-400 text-black px-4 py-1 rounded-full text-sm font-black">POPULAR</div>
-                  <h2 class="text-2xl font-black mb-4 text-orange-400">Pro</h2>
-                  <p class="text-4xl font-black mb-6 text-orange-400">$9.99</p>
-                  <ul class="space-y-2 mb-6 text-sm">
-                    <li>✓ All above +</li>
-                    <li>✓ AI Coach</li>
-                    <li>✓ Smart adaptation</li>
-                  </ul>
-                  <button onclick="selectTier('PRO')" class="w-full py-3 rounded-lg bg-gradient-to-r from-orange-400 to-red-500 font-black hover:opacity-90">Upgrade</button>
-                </div>
-                
-                <div class="border-2 border-purple-400 rounded-xl p-6 bg-purple-950/30">
-                  <h2 class="text-2xl font-black mb-4 text-purple-400">Elite</h2>
-                  <p class="text-4xl font-black mb-6 text-purple-400">$19.99</p>
-                  <ul class="space-y-2 mb-6 text-sm">
-                    <li>✓ All above +</li>
-                    <li>✓ Book coaches</li>
-                    <li>✓ VIP support</li>
-                  </ul>
-                  <button onclick="selectTier('ELITE')" class="w-full py-3 rounded-lg border-2 border-purple-400 font-black hover:bg-purple-400/20">Upgrade</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      } else if (currentPage === 'signin') {
-        app.innerHTML = `
-          <div class="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white flex items-center justify-center px-6">
-            <div class="max-w-md w-full bg-gray-900/50 rounded-xl border border-gray-700 p-8 space-y-6">
-              <div class="text-center">
-                <div class="text-6xl mb-4">🔐</div>
-                <h1 class="text-3xl font-black">${selectedTier} Plan</h1>
-                <p class="text-gray-400 mt-2">Sign in to continue</p>
-              </div>
-              <button onclick="mockGoogleSignIn()" class="w-full py-4 rounded-lg border-2 border-gray-700 font-black text-lg hover:bg-gray-700 transition">
-                🔐 Sign in with Google
-              </button>
-              <button onclick="goBack()" class="w-full py-2 rounded-lg border border-gray-700 text-sm">Back</button>
-            </div>
-          </div>
-        `;
-      } else if (currentPage === 'checkout') {
-        const prices = { STARTER: '$5.99', PRO: '$9.99', ELITE: '$19.99' };
-        app.innerHTML = `
-          <div class="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white flex items-center justify-center px-6">
-            <div class="max-w-md w-full bg-gray-900/50 rounded-xl border border-gray-700 p-8 space-y-6">
-              <div class="text-center">
-                <div class="text-6xl mb-4">💳</div>
-                <h1 class="text-3xl font-black">${selectedTier}</h1>
-                <p class="text-5xl font-black text-orange-400 my-4">${prices[selectedTier]}</p>
-                <p class="text-gray-400">per month</p>
-              </div>
-              <div class="bg-gray-800/50 rounded-lg p-4 text-sm text-gray-300">
-                <p>Email: ${googleUser?.email}</p>
-              </div>
-              <button onclick="mockStripeCheckout()" class="w-full py-4 rounded-lg font-black text-lg bg-gradient-to-r from-orange-400 to-red-500 hover:opacity-90 transition transform hover:scale-105">
-                ✅ Complete Payment
-              </button>
-              <button onclick="goBack()" class="w-full py-2 rounded-lg border border-gray-700 text-sm">Back</button>
             </div>
           </div>
         `;
@@ -468,15 +314,8 @@
     }
 
     function startWorkout() {
-      currentPage = 'workout-select';
-      render();
-    }
-
-    function selectWorkout(id) {
-      const w = workouts.find(x => x.id === id);
-      selectedWorkout = id;
-      currentPage = 'workout-details';
-      render();
+      currentPage = 'countdown';
+      startCountdown();
     }
 
     function continueWorkout() {
@@ -485,48 +324,16 @@
 
     function finishWorkout() {
       sessionActive = false;
-      currentPage = 'workout-select';
+      currentPage = 'landing';
+      sessionTime = 0;
       render();
-    }
-
-    function selectTier(tier) {
-      selectedTier = tier;
-      currentPage = 'signin';
-      render();
-    }
-
-    function mockGoogleSignIn() {
-      googleUser = { email: 'user@gmail.com', name: 'User' };
-      currentPage = 'checkout';
-      render();
-    }
-
-    function mockStripeCheckout() {
-      alert(`✅ Payment processed!\n\nTier: ${selectedTier}\nEmail: ${googleUser.email}\n\nWelcome to KHAN Premium! 🚀`);
-      goBack();
     }
 
     function completeWorkout() {
+      sessionActive = false;
       workoutCount++;
-      sessionActive = false;
-      if (workoutCount >= 3) {
-        currentPage = 'pricing';
-      } else {
-        currentPage = 'workout-select';
-      }
-      render();
-    }
-
-    function goBack() {
-      sessionActive = false;
-      countdownActive = false;
       currentPage = 'landing';
-      workoutCount = 0;
-      selectedTier = null;
-      googleUser = null;
-      selectedWorkout = null;
       sessionTime = 0;
-      countdownValue = 10;
       render();
     }
 
