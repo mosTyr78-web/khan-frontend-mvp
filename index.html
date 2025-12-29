@@ -57,6 +57,17 @@
       },
       { 
         id: 4, 
+        name: "Upper Body Powerhouse", 
+        type: "strength", 
+        duration: 45, 
+        difficulty: "Advanced", 
+        icon: "💪", 
+        color: "from-orange-400 to-amber-500", 
+        phases: ["Chest Ignition", "Shoulder Peaks", "Back Thickness", "Arms Finale"],
+        exercises: ["Barbell bench press: 4x6", "Dumbbell flyes: 3x10", "Incline push-ups: 3x12", "Dumbbell shoulder press: 4x8", "Lateral raises: 3x12", "Face pulls: 3x15", "Barbell rows: 4x6", "Weighted dips: 3x8", "Barbell curls: 3x10"]
+      },
+      { 
+        id: 5, 
         name: "Shadow Boxing Mastery", 
         type: "boxing", 
         duration: 45, 
@@ -67,7 +78,7 @@
         exercises: ["Proper stance x5min", "Jab-cross combos", "Hook-uppercut precision", "Speed punch rounds", "Heavy breathing drills", "Footwork circuits", "Final round intensity"]
       },
       { 
-        id: 5, 
+        id: 6, 
         name: "Pure Jambes Power", 
         type: "strength", 
         duration: 45, 
@@ -78,7 +89,7 @@
         exercises: ["Barbell squats: 5,5,5,3,3,1,1", "Leg press: 4x8", "Romanian deadlifts", "Leg curls: 3x12", "Calf raises: 4x15", "50m sprint", "Rest & recover"]
       },
       { 
-        id: 6, 
+        id: 7, 
         name: "Pure Cardio Endurance", 
         type: "cardio", 
         duration: 45, 
@@ -89,18 +100,18 @@
         exercises: ["10min treadmill at 80%", "3min jump rope", "5min rowing machine max", "2min stair sprints", "1min rest", "Repeat x2", "Final cool-down"]
       },
       { 
-        id: 7, 
+        id: 8, 
         name: "Calisthenics Beast", 
         type: "calisthenics", 
         duration: 45, 
         difficulty: "Advanced", 
-        icon: "💪", 
+        icon: "🤸", 
         color: "from-indigo-400 to-purple-500", 
         phases: ["Muscle-up Progression", "Handstand Hold", "Pistol Squat", "Planche Push"],
         exercises: ["Muscle-up progressions x10", "Hold handstand x20sec", "Pistol squats x5 each leg", "Push-up variations x20", "L-sit hold x15sec", "Dip progression x15", "Core finisher"]
       },
       { 
-        id: 8, 
+        id: 9, 
         name: "Running with Objectives", 
         type: "running", 
         duration: 45, 
@@ -111,7 +122,7 @@
         exercises: ["3km easy warm-up", "2km tempo pace", "5x hill repeats", "8x 200m sprints", "2km cool-down run", "Stretch thoroughly"]
       },
       { 
-        id: 9, 
+        id: 10, 
         name: "Random Objective Challenge", 
         type: "challenge", 
         duration: 45, 
@@ -122,7 +133,7 @@
         exercises: ["20 push-ups in <12sec", "50 burpees for time", "100 jump jacks", "40 mountain climbers", "30 box jumps", "Leaderboard tracking", "Daily randomized challenges"]
       },
       { 
-        id: 10, 
+        id: 11, 
         name: "Fat Loss Protocol", 
         type: "hiit", 
         duration: 45, 
@@ -133,7 +144,7 @@
         exercises: ["40sec burpees / 20sec rest", "40sec jump squats / 20sec rest", "40sec mountain climbers / 20sec rest", "40sec push-ups / 20sec rest", "Repeat x3 rounds", "Metabolism boost guaranteed"]
       },
       { 
-        id: 11, 
+        id: 12, 
         name: "🤖 AI Coach - Smart Training", 
         type: "ai", 
         duration: 45, 
@@ -171,21 +182,23 @@
     function startCountdown() {
       countdownActive = true;
       countdownValue = 10;
+      currentPage = 'countdown';
       updateCountdown();
     }
 
     function updateCountdown() {
       if (!countdownActive) return;
       
+      render();
+      
       if (countdownValue > 0) {
         countdownValue--;
         setTimeout(updateCountdown, 1000);
       } else {
         countdownActive = false;
+        currentPage = 'workout-active';
         startSessionTimer();
       }
-      
-      render();
     }
 
     function startSessionTimer() {
@@ -200,13 +213,13 @@
       sessionTime++;
       workoutPhase = Math.floor(sessionTime / 10);
       
+      render();
+      
       if (sessionTime < 2700) {
         setTimeout(updateSession, 1000);
       } else {
         sessionActive = false;
       }
-      
-      render();
     }
 
     function render() {
@@ -382,7 +395,7 @@
                   <h2 class="text-2xl font-black mb-4">Free</h2>
                   <p class="text-4xl font-black mb-6 text-gray-400">$0</p>
                   <ul class="space-y-2 mb-6 text-sm">
-                    <li>✓ 10 workouts</li>
+                    <li>✓ 11 workouts</li>
                     <li>✓ Basic guidance</li>
                     <li>✓ 45min programs</li>
                   </ul>
