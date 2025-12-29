@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white m-0 p-0">
+  <div id="app"></div>
+  
+  <script>
+    let workoutCount = 0;
+    let currentPage = 'landing';
+    let selectedTier = null;
+    let googleUser = null;
+
+    function render() {
+      const app = document.getElementById('app');
+      
+      if (currentPage === 'landing') {
+        app.innerHTML = `
+          <div class="min-h-screen flex items-center justify-center px-6">
+            <div class="text-center space-y-6 max-w-2xl">
+              <h1 class="text-6xl font-black bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">KHAN</h1>
+              <p class="text-xl text-gray-400">Fitness for Everyone</p>
+              <p class="text-gray-500">Try 3 free. Then choose your plan.</p>
+              <button onclick="startWorkout()" class="px-12 py-6 rounded-xl font-black text-xl bg-gradient-to-r from-orange-400 to-red-500 hover:opacity-90">
+                Start Free Workout
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (currentPage === 'workout') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white px-6 py-12">
+            <button onclick="goBack()" class="text-gray-400 mb-8">← Back</button>
+            <h1 class="text-4xl font-black mb-12 text-orange-400">Select Your Workout</h1>
+            
+            <div class="grid grid-cols-2 gap-4 mb-12 max-w-2xl">
+              <button class="p-8 rounded-lg border-2 border-gray-700 hover:border-orange-400">
+                <div class="text-4xl mb-3">🏠</div>
+                <p class="font-bold">Home</p>
+              </button>
+              <button class="p-8 rounded-lg border-2 border-gray-700 hover:border-orange-400">
+                <div class="text-4xl mb-3">🏋️</div>
+                <p class="font-bold">Gym</p>
+              </button>
+            </div>
+            
+            <button onclick="completeWorkout()" class="px-12 py-3 rounded-lg font-bold bg-gradient-to-r from-orange-400 to-red-500">
+              Start Workout
+            </button>
+            <p class="text-xs text-gray-500 mt-4">Workouts: ${workoutCount}/3</p>
+          </div>
+        `;
+      } else if (currentPage === 'pricing') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white flex items-center justify-center px-6">
+            <div class="max-w-4xl w-full space-y-8">
+              <div class="text-center space-y-4">
+                <h1 class="text-4xl font-black">3 Free Workouts Done!</h1>
+              </div>
+              
+              <div class="grid grid-cols-4 gap-4">
+                <div class="border-2 border-gray-700 rounded-xl p-6">
+                  <h2 class="text-2xl font-black mb-4">Free</h2>
+                  <p class="text-3xl font-black mb-4 text-gray-400">$0</p>
+                  <button onclick="goBack()" class="w-full py-3 rounded-lg border-2 border-gray-700">Keep Free</button>
+                </div>
+                
+                <div class="border-2 border-blue-400 bg-blue-950 rounded-xl p-6">
+                  <h2 class="text-2xl font-black mb-4 text-blue-400">Starter</h2>
+                  <p class="text-3xl font-black mb-4 text-blue-400">$5.99</p>
+                  <button onclick="selectTier('STARTER')" class="w-full py-3 rounded-lg border-2 border-blue-400">Upgrade</button>
+                </div>
+                
+                <div class="border-2 border-orange-400 bg-orange-950 rounded-xl p-6">
+                  <h2 class="text-2xl font-black mb-4 text-orange-400">Pro</h2>
+                  <p class="text-3xl font-black mb-4 text-orange-400">$9.99</p>
+                  <button onclick="selectTier('PRO')" class="w-full py-3 rounded-lg bg-gradient-to-r from-orange-400 to-red-500">Upgrade</button>
+                </div>
+                
+                <div class="border-2 border-purple-400 bg-purple-950 rounded-xl p-6">
+                  <h2 class="text-2xl font-black mb-4 text-purple-400">Elite</h2>
+                  <p class="text-3xl font-black mb-4 text-purple-400">$19.99</p>
+                  <button onclick="selectTier('ELITE')" class="w-full py-3 rounded-lg border-2 border-purple-400">Upgrade</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (currentPage === 'signin') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white flex items-center justify-center px-6">
+            <div class="max-w-md w-full bg-black rounded-xl border border-gray-700 p-8 space-y-6">
+              <h1 class="text-3xl font-black text-center">${selectedTier} Plan</h1>
+              <p class="text-center text-gray-400">Sign in with Google to continue</p>
+              
+              <button onclick="mockGoogleSignIn()" class="w-full py-3 rounded-lg border border-gray-700 font-bold flex items-center justify-center gap-2">
+                🔐 Sign in with Google
+              </button>
+              
+              <button onclick="goBack()" class="w-full py-2 rounded-lg border border-gray-700">
+                Back
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (currentPage === 'checkout') {
+        const prices = { STARTER: '$5.99', PRO: '$9.99', ELITE: '$19.99' };
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white flex items-center justify-center px-6">
+            <div class="max-w-md w-full bg-black rounded-xl border border-gray-700 p-8 space-y-6">
+              <h1 class="text-3xl font-black">${selectedTier}</h1>
+              <p class="text-4xl font-black text-orange-400">${prices[selectedTier]}/mo</p>
+              <p class="text-gray-400">User: ${googleUser?.email || 'Not signed in'}</p>
+              
+              <button onclick="mockStripeCheckout()" class="w-full py-3 rounded-lg font-bold bg-gradient-to-r from-orange-400 to-red-500">
+                Complete Payment
+              </button>
+              
+              <button onclick="goBack()" class="w-full py-2 rounded-lg border border-gray-700">
+                Back
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function startWorkout() {
+      currentPage = 'workout';
+      render();
+    }
+
+    function selectTier(tier) {
+      selectedTier = tier;
+      currentPage = 'signin';
+      render();
+    }
+
+    function mockGoogleSignIn() {
+      googleUser = { email: 'user@gmail.com', name: 'User' };
+      currentPage = 'checkout';
+      render();
+    }
+
+    function mockStripeCheckout() {
+      alert(`✅ Payment processed!\n\nTier: ${selectedTier}\nEmail: ${googleUser.email}\n\nRedirecting to dashboard...`);
+      goBack();
+    }
+
+    function goBack() {
+      currentPage = 'landing';
+      workoutCount = 0;
+      selectedTier = null;
+      googleUser = null;
+      render();
+    }
+
+    function completeWorkout() {
+      workoutCount++;
+      if (workoutCount >= 3) {
+        currentPage = 'pricing';
+      } else {
+        currentPage = 'landing';
+      }
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
