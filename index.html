@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Khan - AI Fitness Coach</title>
+  <title>KHAN - AI Fitness Coach</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://js.stripe.com/v3/"></script>
 </head>
@@ -11,66 +11,15 @@
   <div id="app"></div>
   
   <script>
-    let currentPage = 'home';
-    let selectedWorkout = null;
+    let page = 'home';
     let sessionTime = 0;
     let sessionActive = false;
-    let countdownActive = false;
-    let countdownValue = 10;
-    let workoutCount = 0;
-
-    const amazonTag = 'khanthefitapp-21';
-    const backendUrl = 'https://khan-backend.onrender.com';
-    const stripePublishableKey = 'pk_live_51SglrmP8gDUIaCuBFi5kmHcgbubxdVDPLE7yLK8k27x4CZKmPkuL8bq84ZM0oukELXFSKWhrh4Xqp1KHkBWJSqRo00nf3iJDW6';
-
-    const equipment = {
-      hiit: [
-        { name: 'Yoga Mat', url: 'https://www.amazon.com/s?k=yoga+mat&tag=' + amazonTag },
-        { name: 'Jump Rope', url: 'https://www.amazon.com/s?k=jump+rope&tag=' + amazonTag },
-        { name: 'Resistance Bands', url: 'https://www.amazon.com/s?k=resistance+bands&tag=' + amazonTag }
-      ],
-      strength: [
-        { name: 'Dumbbells Set', url: 'https://www.amazon.com/s?k=adjustable+dumbbells&tag=' + amazonTag },
-        { name: 'Barbell', url: 'https://www.amazon.com/s?k=barbell+set&tag=' + amazonTag },
-        { name: 'Weight Bench', url: 'https://www.amazon.com/s?k=weight+bench&tag=' + amazonTag },
-        { name: 'Pull-up Bar', url: 'https://www.amazon.com/s?k=pull+up+bar&tag=' + amazonTag }
-      ],
-      cardio: [
-        { name: 'Running Shoes', url: 'https://www.amazon.com/s?k=running+shoes&tag=' + amazonTag },
-        { name: 'Bluetooth Headphones', url: 'https://www.amazon.com/s?k=wireless+headphones&tag=' + amazonTag },
-        { name: 'Sports Watch', url: 'https://www.amazon.com/s?k=sports+watch+fitness&tag=' + amazonTag }
-      ]
-    };
 
     const workouts = [
-      { id: 1, name: "Fat Loss Protocol", type: "hiit", duration: 30, difficulty: "Advanced", icon: "🔥", color: "from-red-500 to-pink-500", objectives: [
-        { exercise: "Warm-up", reps: "5 min", duration: 300, command: "Get Your Body Ready", instruction: "Light jogging. Arm circles. Jumping jacks. Deep breathing.", details: "Light pace" },
-        { exercise: "Burpees", reps: "40 sec", duration: 40, command: "Maximum Speed", instruction: "Drop to Push-up Jump feet back Jump UP Non-stop.", details: "Full range" },
-        { exercise: "Rest", reps: "20 sec", duration: 20, command: "Breathe Hard", instruction: "Heavy breathing Hands on knees.", details: "Catch breath" },
-        { exercise: "Jump Squats", reps: "40 sec", duration: 40, command: "Explosive Legs", instruction: "Squat down Jump UP high Land soft.", details: "Deep squat" },
-        { exercise: "Rest", reps: "20 sec", duration: 20, command: "Breathe", instruction: "Keep moving Light bouncing.", details: "Stay moving" },
-        { exercise: "Mountain Climbers", reps: "40 sec", duration: 40, command: "Cardio Overload", instruction: "Plank Drive knees to chest FAST.", details: "Fast pace" },
-        { exercise: "Rest", reps: "20 sec", duration: 20, command: "Almost Done", instruction: "Shake it out Get ready.", details: "Shake legs" },
-        { exercise: "Push-ups", reps: "40 sec", duration: 40, command: "Chest Strength", instruction: "Lower chest to ground Push explosively up.", details: "Full depth" },
-        { exercise: "Round 2", reps: "Repeat", duration: 280, command: "Push Harder", instruction: "Same 4 exercises Increase intensity.", details: "Faster pace" },
-        { exercise: "Round 3", reps: "All Out", duration: 280, command: "Final Round", instruction: "Everything you got Last push.", details: "Maximum effort" },
-        { exercise: "Cool Down", reps: "5 min", duration: 300, command: "You Crushed It", instruction: "Walk it out Light stretching.", details: "Walk it out" }
-      ]},
-      { id: 2, name: "Upper Body Powerhouse", type: "strength", duration: 30, difficulty: "Advanced", icon: "💪", color: "from-orange-400 to-amber-500", objectives: [
-        { exercise: "Warm-up", reps: "3 min", duration: 180, command: "Prepare Your Shoulders", instruction: "Light cardio Arm circles Band work.", details: "Light pace" },
-        { exercise: "Bench Press", reps: "4x6", duration: 360, command: "Heavy Weight", instruction: "Lower to chest Explode up 2 min rest.", details: "Full depth" },
-        { exercise: "Cool Down", reps: "5 min", duration: 300, command: "Recovery", instruction: "Light stretching", details: "Done" }
-      ]},
-      { id: 3, name: "Lower Body Blast", type: "strength", duration: 30, difficulty: "Intermediate", icon: "🦵", color: "from-pink-400 to-red-500", objectives: [
-        { exercise: "Warm-up", reps: "3 min", duration: 180, command: "Activate Legs", instruction: "Light cardio Leg swings Mobility.", details: "Light pace" },
-        { exercise: "Glute Bridges", reps: "4x15", duration: 240, command: "Squeeze Glutes", instruction: "Squeeze at top Feel glutes contract.", details: "Squeeze" },
-        { exercise: "Cool Down", reps: "5 min", duration: 300, command: "Done", instruction: "Stretch", details: "Rest" }
-      ]},
-      { id: 4, name: "Cardio Endurance", type: "cardio", duration: 30, difficulty: "Advanced", icon: "🏃", color: "from-blue-400 to-cyan-500", objectives: [
-        { exercise: "Warm-up", reps: "5 min", duration: 300, command: "Easy Pace", instruction: "Light jogging Get heart rate up.", details: "Light pace" },
-        { exercise: "Steady State", reps: "10 min", duration: 600, command: "Maintain Pace", instruction: "Sustained speed Controlled breathing.", details: "Steady" },
-        { exercise: "Cool Down", reps: "5 min", duration: 300, command: "Done", instruction: "Walk it out", details: "Rest" }
-      ]}
+      { id: 1, name: "Fat Loss Protocol", difficulty: "Advanced", duration: 30, icon: "🔥" },
+      { id: 2, name: "Upper Body Powerhouse", difficulty: "Advanced", duration: 30, icon: "💪" },
+      { id: 3, name: "Lower Body Blast", difficulty: "Intermediate", duration: 30, icon: "🦵" },
+      { id: 4, name: "Cardio Endurance", difficulty: "Advanced", duration: 30, icon: "🏃" }
     ];
 
     function formatTime(s) {
@@ -79,145 +28,71 @@
       return m + ':' + (sec < 10 ? '0' : '') + sec;
     }
 
-    function getCurrentObjectiveIndex(wid, te) {
-      const w = workouts.find(x => x.id === wid);
-      if (!w) return 0;
-      let ct = 0;
-      for (let i = 0; i < w.objectives.length; i++) {
-        ct += w.objectives[i].duration;
-        if (te < ct) return i;
-      }
-      return w.objectives.length - 1;
-    }
-
-    function getTimeIntoObjective(wid, te) {
-      const w = workouts.find(x => x.id === wid);
-      if (!w) return 0;
-      let ct = 0;
-      for (let i = 0; i < w.objectives.length; i++) {
-        if (te < ct + w.objectives[i].duration) {
-          return te - ct;
-        }
-        ct += w.objectives[i].duration;
-      }
-      return 0;
-    }
-
-    function getTotalDuration(wid) {
-      const w = workouts.find(x => x.id === wid);
-      if (!w) return 0;
-      return w.objectives.reduce((sum, obj) => sum + obj.duration, 0);
-    }
-
-    async function createCheckoutSession(tier) {
-      try {
-        const response = await fetch(backendUrl + '/stripe/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tier: tier })
-        });
-        const data = await response.json();
-        if (data.sessionId) {
-          const stripe = Stripe(stripePublishableKey);
-          await stripe.redirectToCheckout({ sessionId: data.sessionId });
-        } else {
-          alert('Error: ' + (data.error || 'Payment failed'));
-        }
-      } catch (error) {
-        alert('Error: ' + error.message);
-      }
-    }
-
-    function updateCountdown() {
-      if (!countdownActive) return;
-      render();
-      if (countdownValue > 0) {
-        countdownValue--;
-        setTimeout(updateCountdown, 1000);
-      } else {
-        countdownActive = false;
-        currentPage = 'workout-active';
-        startSessionTimer();
-      }
-    }
-
-    function startSessionTimer() {
-      sessionActive = true;
-      sessionTime = 0;
-      updateSession();
-    }
-
-    function updateSession() {
-      if (!sessionActive) return;
-      sessionTime++;
-      render();
-      const td = getTotalDuration(selectedWorkout);
-      if (sessionTime < td) {
-        setTimeout(updateSession, 1000);
-      } else {
-        sessionActive = false;
-      }
-    }
-
     function render() {
       const app = document.getElementById('app');
       
-      if (currentPage === 'home') {
-        let html = '<div class="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white px-6 py-12"><div class="max-w-4xl mx-auto"><div class="text-center mb-12"><h1 class="text-6xl font-black mb-2">KHAN</h1><p class="text-xl text-gray-400">Professional Fitness Coach</p></div><div class="space-y-4 mb-12">';
-        
-        workouts.forEach(w => {
-          html += '<button onclick="selectWorkout(' + w.id + ')" class="w-full p-6 rounded-xl border-2 border-gray-700 hover:border-orange-400 bg-gradient-to-br ' + w.color + '/10 transition text-left"><div class="flex items-center justify-between"><div><p class="text-2xl font-black">' + w.name + '</p><p class="text-sm text-gray-400 mt-2">' + w.difficulty + ' • ' + w.duration + 'min</p></div><p class="text-3xl">' + w.icon + '</p></div></button>';
-        });
-        
-        html += '</div><button onclick="currentPage=\'pricing\'; render();" class="w-full py-4 mb-12 rounded-xl bg-gradient-to-r from-orange-400 to-red-500 font-black text-lg hover:opacity-90">Upgrade to Premium</button></div></div>';
-        app.innerHTML = html;
-      } else if (currentPage === 'pricing') {
-        let html = '<div class="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white px-6 py-12"><button onclick="currentPage=\'home\'; render();" class="text-gray-400 hover:text-orange-400 mb-8">Back</button><div class="max-w-4xl mx-auto"><div class="text-center mb-12"><h1 class="text-5xl font-black mb-2">Upgrade to Premium</h1><p class="text-gray-400">Unlock unlimited workouts</p></div><div class="grid md:grid-cols-3 gap-6"><div class="border-2 border-blue-400 rounded-xl p-8 bg-blue-950/30"><h2 class="text-2xl font-black mb-4 text-blue-400">Starter</h2><p class="text-4xl font-black mb-6">$5.99<span class="text-sm text-gray-400">/mo</span></p><ul class="space-y-3 mb-8 text-sm"><li>All workouts</li><li>No ads</li></ul><button onclick="createCheckoutSession(\'STARTER\')" class="w-full py-3 rounded-lg border-2 border-blue-400 font-bold">Get Started</button></div><div class="border-4 border-orange-400 rounded-xl p-8 bg-orange-950/30 relative"><h2 class="text-2xl font-black mb-4 text-orange-400">Pro</h2><p class="text-4xl font-black mb-6">$9.99<span class="text-sm text-gray-400">/mo</span></p><ul class="space-y-3 mb-8 text-sm"><li>All above</li><li>AI Coach</li></ul><button onclick="createCheckoutSession(\'PRO\')" class="w-full py-3 rounded-lg bg-gradient-to-r from-orange-400 to-red-500 font-bold">Upgrade Now</button></div><div class="border-2 border-purple-400 rounded-xl p-8 bg-purple-950/30"><h2 class="text-2xl font-black mb-4 text-purple-400">Elite</h2><p class="text-4xl font-black mb-6">$19.99<span class="text-sm text-gray-400">/mo</span></p><ul class="space-y-3 mb-8 text-sm"><li>All above</li><li>VIP Support</li></ul><button onclick="createCheckoutSession(\'ELITE\')" class="w-full py-3 rounded-lg border-2 border-purple-400 font-bold">Go Elite</button></div></div></div></div>';
-        app.innerHTML = html;
-      } else if (currentPage === 'countdown') {
-        const w = workouts.find(x => x.id === selectedWorkout);
-        app.innerHTML = '<div class="min-h-screen bg-gradient-to-br ' + w.color + '/10 text-white flex flex-col items-center justify-center px-6"><button onclick="currentPage=\'home\'; render();" class="absolute top-6 left-6 text-gray-400">Back</button><div class="text-center space-y-12"><h1 class="text-5xl font-black">' + w.name + '</h1><p class="text-3xl text-gray-400 font-bold">Ready?</p><div class="relative"><div class="absolute inset-0 bg-gradient-to-r ' + w.color + ' blur-3xl opacity-50"></div><div class="relative text-9xl font-black text-white animate-pulse">' + (countdownValue > 0 ? countdownValue : 'GO') + '</div></div></div></div>';
-      } else if (currentPage === 'workout-active') {
-        const w = workouts.find(x => x.id === selectedWorkout);
-        const td = getTotalDuration(selectedWorkout);
-        const oi = getCurrentObjectiveIndex(selectedWorkout, sessionTime);
-        const tio = getTimeIntoObjective(selectedWorkout, sessionTime);
-        const obj = w.objectives[oi];
-        const tp = Math.min(100, (sessionTime / td) * 100);
-        const op = Math.min(100, (tio / obj.duration) * 100);
-        const tl = obj.duration - tio;
-        const ic = sessionTime >= td;
-        
-        let html = '<div class="min-h-screen bg-gradient-to-br ' + w.color + '/10 text-white px-6 py-8 flex flex-col"><button onclick="finishWorkout()" class="text-gray-400 self-start mb-4">Exit</button><div class="text-center mb-6"><p class="text-5xl font-black">' + formatTime(sessionTime) + ' / ' + formatTime(td) + '</p><div class="w-full bg-gray-800 rounded-full h-2 mt-3"><div class="bg-gradient-to-r ' + w.color + ' h-full" style="width:' + tp + '%"></div></div></div><div class="flex-1 flex flex-col items-center justify-center space-y-8 max-w-3xl mx-auto"><div class="text-6xl font-black text-yellow-400">' + formatTime(tl) + '</div><div class="text-3xl font-black">' + obj.exercise + '</div><div class="border-4 border-yellow-400 rounded-2xl p-8 bg-yellow-400/10 w-full text-center"><p class="text-4xl font-black text-yellow-400">' + obj.command + '</p><p class="text-xl text-orange-300 font-bold">' + obj.instruction + '</p></div>';
-        
-        if (!ic) {
-          html += '<button onclick="continueWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r ' + w.color + '">PUSH</button>';
-        } else {
-          html += '<button onclick="finishWorkout()" class="px-16 py-6 rounded-xl font-black text-2xl bg-gradient-to-r from-green-400 to-emerald-500">COMPLETE</button>';
+      if (page === 'home') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-gradient-to-b from-black to-gray-900 px-6 py-12">
+            <div class="max-w-4xl mx-auto">
+              <div class="text-center mb-16">
+                <h1 class="text-7xl font-black mb-4">KHAN</h1>
+                <p class="text-xl text-gray-400">Professional Fitness Coach</p>
+              </div>
+              <div class="space-y-4 mb-12">
+                ${workouts.map(w => `
+                  <button onclick="selectWorkout(${w.id})" class="w-full p-6 rounded-xl border-2 border-gray-700 hover:border-gray-500 bg-gray-900/50 text-left transition">
+                    <div class="flex justify-between">
+                      <div><p class="text-2xl font-black">${w.name}</p><p class="text-sm text-gray-400">${w.difficulty} • ${w.duration}min</p></div>
+                      <p class="text-3xl">${w.icon}</p>
+                    </div>
+                  </button>
+                `).join('')}
+              </div>
+              <button onclick="page='pricing'; render();" class="w-full py-4 rounded-xl bg-gray-800 hover:bg-gray-700 font-black text-lg transition">View Pricing</button>
+            </div>
+          </div>
+        `;
+      } else if (page === 'workout') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white px-6 py-8 flex flex-col items-center justify-center">
+            <button onclick="page='home'; render();" class="absolute top-6 left-6 text-gray-400">← Exit</button>
+            <p class="text-6xl font-black">${formatTime(sessionTime)}</p>
+            <p class="text-3xl font-black mt-8">Upper Body Powerhouse</p>
+            <button onclick="page='success'; render();" class="mt-12 px-8 py-4 bg-gray-700 rounded-lg font-black">Complete</button>
+          </div>
+        `;
+        if (sessionActive) {
+          setTimeout(() => {
+            sessionTime++;
+            render();
+          }, 1000);
         }
-        
-        html += '</div></div>';
-        app.innerHTML = html;
+      } else if (page === 'pricing') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white px-6 py-12">
+            <button onclick="page='home'; render();" class="text-gray-400 mb-8">← Back</button>
+            <h1 class="text-5xl font-black text-center mb-12">Pricing</h1>
+            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div class="border-2 border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-black mb-4">Starter</h2><p class="text-4xl font-black mb-6">$5.99</p><button class="w-full py-3 border-2 border-gray-700 rounded-lg font-bold">Get Started</button></div>
+              <div class="border-2 border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-black mb-4">Pro</h2><p class="text-4xl font-black mb-6">$9.99</p><button class="w-full py-3 bg-gray-700 rounded-lg font-bold">Upgrade</button></div>
+              <div class="border-2 border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-black mb-4">Elite</h2><p class="text-4xl font-black mb-6">$19.99</p><button class="w-full py-3 border-2 border-gray-700 rounded-lg font-bold">Go Elite</button></div>
+            </div>
+          </div>
+        `;
+      } else if (page === 'success') {
+        app.innerHTML = `
+          <div class="min-h-screen bg-black text-white flex items-center justify-center">
+            <div class="text-center"><div class="text-7xl mb-8">✨</div><h1 class="text-5xl font-black mb-8">Workout Complete!</h1><button onclick="page='home'; render();" class="px-8 py-4 bg-gray-700 rounded-lg font-black">Home</button></div>
+          </div>
+        `;
       }
     }
 
     function selectWorkout(id) {
-      selectedWorkout = id;
-      currentPage = 'countdown';
-      countdownActive = true;
-      countdownValue = 10;
-      updateCountdown();
-    }
-
-    function continueWorkout() {
-      render();
-    }
-
-    function finishWorkout() {
-      sessionActive = false;
-      currentPage = 'home';
+      page = 'workout';
       sessionTime = 0;
-      selectedWorkout = null;
+      sessionActive = true;
       render();
     }
 
