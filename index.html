@@ -1,102 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>KHAN - AI Fitness Coach</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://js.stripe.com/v3/"></script>
 </head>
-<body class="bg-black text-white m-0 p-0">
-  <div id="app"></div>
-  
-  <script>
-    let page = 'home';
-    let sessionTime = 0;
-    let sessionActive = false;
-
-    const workouts = [
-      { id: 1, name: "Fat Loss Protocol", difficulty: "Advanced", duration: 30, icon: "🔥" },
-      { id: 2, name: "Upper Body Powerhouse", difficulty: "Advanced", duration: 30, icon: "💪" },
-      { id: 3, name: "Lower Body Blast", difficulty: "Intermediate", duration: 30, icon: "🦵" },
-      { id: 4, name: "Cardio Endurance", difficulty: "Advanced", duration: 30, icon: "🏃" }
-    ];
-
-    function formatTime(s) {
-      const m = Math.floor(s / 60);
-      const sec = s % 60;
-      return m + ':' + (sec < 10 ? '0' : '') + sec;
-    }
-
-    function render() {
-      const app = document.getElementById('app');
-      
-      if (page === 'home') {
-        app.innerHTML = `
-          <div class="min-h-screen bg-gradient-to-b from-black to-gray-900 px-6 py-12">
-            <div class="max-w-4xl mx-auto">
-              <div class="text-center mb-16">
-                <h1 class="text-7xl font-black mb-4">KHAN</h1>
-                <p class="text-xl text-gray-400">Professional Fitness Coach</p>
-              </div>
-              <div class="space-y-4 mb-12">
-                ${workouts.map(w => `
-                  <button onclick="selectWorkout(${w.id})" class="w-full p-6 rounded-xl border-2 border-gray-700 hover:border-gray-500 bg-gray-900/50 text-left transition">
-                    <div class="flex justify-between">
-                      <div><p class="text-2xl font-black">${w.name}</p><p class="text-sm text-gray-400">${w.difficulty} • ${w.duration}min</p></div>
-                      <p class="text-3xl">${w.icon}</p>
-                    </div>
-                  </button>
-                `).join('')}
-              </div>
-              <button onclick="page='pricing'; render();" class="w-full py-4 rounded-xl bg-gray-800 hover:bg-gray-700 font-black text-lg transition">View Pricing</button>
-            </div>
-          </div>
-        `;
-      } else if (page === 'workout') {
-        app.innerHTML = `
-          <div class="min-h-screen bg-black text-white px-6 py-8 flex flex-col items-center justify-center">
-            <button onclick="page='home'; render();" class="absolute top-6 left-6 text-gray-400">← Exit</button>
-            <p class="text-6xl font-black">${formatTime(sessionTime)}</p>
-            <p class="text-3xl font-black mt-8">Upper Body Powerhouse</p>
-            <button onclick="page='success'; render();" class="mt-12 px-8 py-4 bg-gray-700 rounded-lg font-black">Complete</button>
-          </div>
-        `;
-        if (sessionActive) {
-          setTimeout(() => {
-            sessionTime++;
-            render();
-          }, 1000);
-        }
-      } else if (page === 'pricing') {
-        app.innerHTML = `
-          <div class="min-h-screen bg-black text-white px-6 py-12">
-            <button onclick="page='home'; render();" class="text-gray-400 mb-8">← Back</button>
-            <h1 class="text-5xl font-black text-center mb-12">Pricing</h1>
-            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div class="border-2 border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-black mb-4">Starter</h2><p class="text-4xl font-black mb-6">$5.99</p><button class="w-full py-3 border-2 border-gray-700 rounded-lg font-bold">Get Started</button></div>
-              <div class="border-2 border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-black mb-4">Pro</h2><p class="text-4xl font-black mb-6">$9.99</p><button class="w-full py-3 bg-gray-700 rounded-lg font-bold">Upgrade</button></div>
-              <div class="border-2 border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-black mb-4">Elite</h2><p class="text-4xl font-black mb-6">$19.99</p><button class="w-full py-3 border-2 border-gray-700 rounded-lg font-bold">Go Elite</button></div>
-            </div>
-          </div>
-        `;
-      } else if (page === 'success') {
-        app.innerHTML = `
-          <div class="min-h-screen bg-black text-white flex items-center justify-center">
-            <div class="text-center"><div class="text-7xl mb-8">✨</div><h1 class="text-5xl font-black mb-8">Workout Complete!</h1><button onclick="page='home'; render();" class="px-8 py-4 bg-gray-700 rounded-lg font-black">Home</button></div>
-          </div>
-        `;
-      }
-    }
-
-    function selectWorkout(id) {
-      page = 'workout';
-      sessionTime = 0;
-      sessionActive = true;
-      render();
-    }
-
-    render();
-  </script>
+<body class="m-0 p-0">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
