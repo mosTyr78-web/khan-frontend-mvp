@@ -17,7 +17,7 @@ async function createCheckoutSession(tier) {
 
 export default function Pricing({ onBack }) {
   return (
-    <div className="h-screen w-screen bg-gradient-to-b from-black to-gray-900 px-4 py-8 overflow-y-auto flex flex-col">
+    <div className="h-screen w-screen bg-black/50 px-4 py-8 overflow-y-auto flex flex-col">
       <button onClick={onBack} className="text-gray-400 mb-8">← Back</button>
       <h1 className="text-4xl font-black text-center mb-10">Pricing</h1>
       

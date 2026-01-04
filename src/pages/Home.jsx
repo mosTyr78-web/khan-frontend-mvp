@@ -1,6 +1,6 @@
 export default function Home({ workouts, onSelect, onPricing }) {
   return (
-    <div className="h-screen w-screen bg-gradient-to-b from-black to-gray-900 px-4 py-8 overflow-y-auto flex flex-col">
+    <div className="h-screen w-screen bg-black/50 px-4 py-8 overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col items-center justify-start pt-8">
         <h1 className="text-6xl font-black mb-2">KHAN</h1>
         <p className="text-gray-400 mb-12">Professional Fitness Coach</p>

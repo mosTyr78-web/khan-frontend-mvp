@@ -1,6 +1,6 @@
 export default function Success({ onHome }) {
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-black to-gray-900 flex items-center justify-center px-4">
+    <div className="h-screen w-screen bg-black/50 flex items-center justify-center px-4">
       <div className="text-center space-y-8">
         <div className="text-7xl">✨</div>
         <h1 className="text-5xl font-black">Complete!</h1>

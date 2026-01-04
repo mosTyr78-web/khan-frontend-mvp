@@ -35,7 +35,7 @@ export default function App() {
   const [sessionActive, setSessionActive] = useState(false)
 
   return (
-    <div className="h-screen w-screen bg-black text-white overflow-hidden">
+    <div className="h-screen w-screen text-white overflow-hidden">
       {page === 'home' && <Home workouts={WORKOUTS} onSelect={(id) => { setSelectedWorkout(id); setPage('countdown'); }} onPricing={() => setPage('pricing')} />}
       {page === 'countdown' && <Countdown workout={WORKOUTS.find(w => w.id === selectedWorkout)} onStart={() => { setPage('workout'); setSessionActive(true); setSessionTime(0); }} onBack={() => setPage('home')} />}
       {page === 'workout' && <WorkoutActive workout={WORKOUTS.find(w => w.id === selectedWorkout)} sessionTime={sessionTime} setSessionTime={setSessionTime} sessionActive={sessionActive} setSessionActive={setSessionActive} onComplete={() => setPage('success')} onExit={() => { setPage('home'); setSessionActive(false); }} />}

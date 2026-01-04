@@ -36,7 +36,7 @@ export default function WorkoutActive({ workout, sessionTime, setSessionTime, se
   }
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-black to-gray-900 px-4 py-6 flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-black/50 px-4 py-6 flex flex-col overflow-hidden">
       <button onClick={onExit} className="text-gray-400 mb-4">← Exit</button>
       
       <div className="text-center mb-6">
