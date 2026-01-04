@@ -1,5 +1,15 @@
 import { useEffect } from 'react'
 
+const getVideoForExercise = (exercise) => {
+  const name = exercise.toLowerCase()
+  if (name.includes('burpee')) return '/videos/burpees.mp4'
+  if (name.includes('squat')) return '/videos/squat.mp4'
+  if (name.includes('push') || name.includes('bench') || name.includes('press')) return '/videos/pushups.mp4'
+  if (name.includes('sprint') || name.includes('run') || name.includes('jog') || name.includes('cardio') || name.includes('warm') || name.includes('cool')) return '/videos/run.mp4'
+  if (name.includes('abs') || name.includes('crunch') || name.includes('plank') || name.includes('core')) return '/videos/abs.mp4'
+  return '/videos/run.mp4' // default
+}
+
 export default function WorkoutActive({ workout, sessionTime, setSessionTime, sessionActive, setSessionActive, onComplete, onExit }) {
   useEffect(() => {
     if (!sessionActive) return
@@ -47,20 +57,34 @@ export default function WorkoutActive({ workout, sessionTime, setSessionTime, se
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-        <p className="text-6xl font-black">{formatTime(tl)}</p>
+      <div className="flex-1 flex flex-col items-center justify-center space-y-4">
+        <p className="text-5xl font-black">{formatTime(tl)}</p>
+
+        <div className="w-40 h-40 rounded-2xl overflow-hidden bg-black/50">
+          <video
+            key={obj.exercise}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={getVideoForExercise(obj.exercise)} type="video/mp4" />
+          </video>
+        </div>
+
         <div className="text-center">
           <p className="text-2xl font-black">{obj.exercise}</p>
-          <p className="text-gray-400 mt-2">{obj.reps}</p>
+          <p className="text-gray-400">{obj.reps}</p>
         </div>
 
         <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
           <div className="bg-gray-600 h-full" style={{width: op + '%'}}></div>
         </div>
 
-        <div className="border-4 border-gray-500 rounded-2xl p-6 bg-gray-900/50 w-full text-center space-y-2">
-          <p className="text-3xl font-black text-gray-200">{obj.command}</p>
-          <p className="text-base text-gray-300">{obj.instruction}</p>
+        <div className="border-4 border-gray-500 rounded-2xl p-4 bg-gray-900/50 w-full text-center">
+          <p className="text-2xl font-black text-gray-200">{obj.command}</p>
+          <p className="text-sm text-gray-300">{obj.instruction}</p>
         </div>
 
         {!isCompleted ? <button onClick={() => {}} className="px-12 py-4 rounded-xl font-black text-xl bg-gray-700 active:scale-95">PUSH</button> : <button onClick={onComplete} className="px-12 py-4 rounded-xl font-black text-xl bg-gray-600 active:scale-95">DONE</button>}
