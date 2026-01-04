@@ -4,6 +4,7 @@ import Countdown from './pages/Countdown'
 import WorkoutActive from './pages/WorkoutActive'
 import Success from './pages/Success'
 import Pricing from './pages/Pricing'
+import Challenges from './pages/Challenges'
 
 const WORKOUTS = [
   { id: 1, name: "Fat Loss Protocol", difficulty: "Advanced", duration: 30, icon: "🔥", objectives: [
@@ -33,14 +34,25 @@ export default function App() {
   const [selectedWorkout, setSelectedWorkout] = useState(null)
   const [sessionTime, setSessionTime] = useState(0)
   const [sessionActive, setSessionActive] = useState(false)
+  // For demo: set to 'pro', 'elite', or null (free user)
+  const [userTier, setUserTier] = useState('elite')
+  const [activeChallenge, setActiveChallenge] = useState(null)
+
+  const handleStartChallenge = (challenge) => {
+    setActiveChallenge(challenge)
+    // TODO: Start challenge tracking
+    alert(`Challenge "${challenge.name}" started! Good luck!`)
+    setPage('home')
+  }
 
   return (
     <div className="h-screen w-screen text-white overflow-hidden">
-      {page === 'home' && <Home workouts={WORKOUTS} onSelect={(id) => { setSelectedWorkout(id); setPage('countdown'); }} onPricing={() => setPage('pricing')} />}
+      {page === 'home' && <Home workouts={WORKOUTS} userTier={userTier} onSelect={(id) => { setSelectedWorkout(id); setPage('countdown'); }} onPricing={() => setPage('pricing')} onChallenges={() => setPage('challenges')} />}
       {page === 'countdown' && <Countdown workout={WORKOUTS.find(w => w.id === selectedWorkout)} onStart={() => { setPage('workout'); setSessionActive(true); setSessionTime(0); }} onBack={() => setPage('home')} />}
       {page === 'workout' && <WorkoutActive workout={WORKOUTS.find(w => w.id === selectedWorkout)} sessionTime={sessionTime} setSessionTime={setSessionTime} sessionActive={sessionActive} setSessionActive={setSessionActive} onComplete={() => setPage('success')} onExit={() => { setPage('home'); setSessionActive(false); }} />}
       {page === 'success' && <Success onHome={() => setPage('home')} />}
       {page === 'pricing' && <Pricing onBack={() => setPage('home')} />}
+      {page === 'challenges' && <Challenges userTier={userTier} onBack={() => setPage('home')} onStartChallenge={handleStartChallenge} />}
     </div>
   )
 }
