@@ -283,7 +283,7 @@ export default function Landing({ goTo }) {
               <a href="https://x.com/TheKhanfitness" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
                 <span>𝕏</span>
               </a>
-              <a href="https://youtube.com/@khanfitness" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+              <a href="https://www.youtube.com/@Johnkhanbash" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
                 <span>▶️</span>
               </a>
             </div>

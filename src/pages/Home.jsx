@@ -171,7 +171,7 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
 
             {/* YouTube */}
             <a
-              href="https://youtube.com/@khanfitness"
+              href="https://www.youtube.com/@Johnkhanbash"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center hover:scale-110 transition-transform"
