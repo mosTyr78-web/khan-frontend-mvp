@@ -12,6 +12,8 @@ import Coaches from './pages/Coaches'
 import BecomeCoach from './pages/BecomeCoach'
 import CoachDashboard from './pages/CoachDashboard'
 import Share from './pages/Share'
+import Skins from './pages/Skins'
+import Shop from './pages/Shop'
 
 const WORKOUTS = [
   { id: 1, name: "Fat Loss Protocol", difficulty: "Advanced", duration: 30, icon: "🔥", objectives: [
@@ -46,6 +48,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [activeChallenge, setActiveChallenge] = useState(null)
   const [completedChallenges, setCompletedChallenges] = useState(3)
+  const [activeSkin, setActiveSkin] = useState('fire')
 
   const handleStartChallenge = (challenge) => {
     setActiveChallenge(challenge)
@@ -156,6 +159,20 @@ export default function App() {
           userTier={userTier}
           sessionTime={sessionTime}
           completedChallenges={completedChallenges}
+        />
+      )}
+      {page === 'skins' && (
+        <Skins
+          goTo={goTo}
+          userTier={userTier}
+          activeSkin={activeSkin}
+          setActiveSkin={setActiveSkin}
+        />
+      )}
+      {page === 'shop' && (
+        <Shop
+          goTo={goTo}
+          userTier={userTier}
         />
       )}
     </div>

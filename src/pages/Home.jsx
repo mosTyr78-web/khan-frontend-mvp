@@ -53,7 +53,19 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
             <div className="flex flex-col">
               <p className="text-2xl mb-1">🌳</p>
               <p className="text-sm font-black text-purple-400">PROGRESSION</p>
-              <p className="text-xs text-gray-400">Badges & Skins</p>
+              <p className="text-xs text-gray-400">Badges & XP</p>
+            </div>
+          </button>
+
+          {/* Skins */}
+          <button
+            onClick={() => goTo && goTo('skins')}
+            className="p-4 rounded-2xl bg-gradient-to-r from-orange-500/20 to-red-500/20 border-2 border-orange-500/50 hover:border-orange-500 text-left active:scale-95 transition"
+          >
+            <div className="flex flex-col">
+              <p className="text-2xl mb-1">🎨</p>
+              <p className="text-sm font-black text-orange-400">SKINS</p>
+              <p className="text-xs text-gray-400">Goku, Vegeta...</p>
             </div>
           </button>
 
@@ -66,6 +78,18 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
               <p className="text-2xl mb-1">🏋️</p>
               <p className="text-sm font-black text-blue-400">COACHS</p>
               <p className="text-xs text-gray-400">Trouve ton coach</p>
+            </div>
+          </button>
+
+          {/* Shop - Amazon Partner */}
+          <button
+            onClick={() => goTo && goTo('shop')}
+            className="p-4 rounded-2xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-2 border-green-500/50 hover:border-green-500 text-left active:scale-95 transition"
+          >
+            <div className="flex flex-col">
+              <p className="text-2xl mb-1">🛒</p>
+              <p className="text-sm font-black text-green-400">SHOP</p>
+              <p className="text-xs text-gray-400">Gear & Equipment</p>
             </div>
           </button>
         </div>
