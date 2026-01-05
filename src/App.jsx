@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Landing from './pages/Landing'
 import Home from './pages/Home'
 import Countdown from './pages/Countdown'
 import WorkoutActive from './pages/WorkoutActive'
@@ -6,6 +7,11 @@ import Success from './pages/Success'
 import Pricing from './pages/Pricing'
 import Challenges from './pages/Challenges'
 import Login from './pages/Login'
+import ProgressionTree from './pages/ProgressionTree'
+import Coaches from './pages/Coaches'
+import BecomeCoach from './pages/BecomeCoach'
+import CoachDashboard from './pages/CoachDashboard'
+import Share from './pages/Share'
 
 const WORKOUTS = [
   { id: 1, name: "Fat Loss Protocol", difficulty: "Advanced", duration: 30, icon: "🔥", objectives: [
@@ -31,14 +37,15 @@ const WORKOUTS = [
 ]
 
 export default function App() {
-  const [page, setPage] = useState('home')
+  const [page, setPage] = useState('landing')
   const [selectedWorkout, setSelectedWorkout] = useState(null)
   const [sessionTime, setSessionTime] = useState(0)
   const [sessionActive, setSessionActive] = useState(false)
-  // For demo: set to 'pro', 'elite', or null (free user)
-  const [userTier, setUserTier] = useState('elite')
+  // User state - For demo: set to 'PRO', 'ELITE', 'ULTRA', 'LEGEND', or 'FREE'
+  const [userTier, setUserTier] = useState('ELITE')
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [activeChallenge, setActiveChallenge] = useState(null)
+  const [completedChallenges, setCompletedChallenges] = useState(3)
 
   const handleStartChallenge = (challenge) => {
     setActiveChallenge(challenge)
@@ -51,17 +58,106 @@ export default function App() {
     setPage('home')
   }
 
+  const goTo = (pageName) => setPage(pageName)
+
   const currentWorkout = WORKOUTS.find(w => w.id === selectedWorkout)
 
   return (
     <div className="h-screen w-screen text-white overflow-hidden">
-      {page === 'home' && <Home workouts={WORKOUTS} userTier={userTier} isLoggedIn={isLoggedIn} onSelect={(id) => { setSelectedWorkout(id); setPage('countdown'); }} onPricing={() => setPage('pricing')} onChallenges={() => setPage('challenges')} onLogin={() => setPage('login')} />}
-      {page === 'countdown' && <Countdown workout={currentWorkout} onStart={() => { setPage('workout'); setSessionActive(true); setSessionTime(0); }} onBack={() => setPage('home')} />}
-      {page === 'workout' && <WorkoutActive workout={currentWorkout} sessionTime={sessionTime} setSessionTime={setSessionTime} sessionActive={sessionActive} setSessionActive={setSessionActive} onComplete={() => setPage('success')} onExit={() => { setPage('home'); setSessionActive(false); }} />}
-      {page === 'success' && <Success workout={currentWorkout} onHome={() => setPage('home')} />}
-      {page === 'pricing' && <Pricing onBack={() => setPage('home')} />}
-      {page === 'challenges' && <Challenges userTier={userTier} onBack={() => setPage('home')} onStartChallenge={handleStartChallenge} />}
-      {page === 'login' && <Login onBack={() => setPage('home')} onLogin={handleLogin} />}
+      {page === 'landing' && (
+        <Landing goTo={goTo} />
+      )}
+      {page === 'home' && (
+        <Home
+          workouts={WORKOUTS}
+          userTier={userTier}
+          isLoggedIn={isLoggedIn}
+          onSelect={(id) => { setSelectedWorkout(id); setPage('countdown'); }}
+          onPricing={() => setPage('pricing')}
+          onChallenges={() => setPage('challenges')}
+          onLogin={() => setPage('login')}
+          goTo={goTo}
+        />
+      )}
+      {page === 'countdown' && (
+        <Countdown
+          workout={currentWorkout}
+          onStart={() => { setPage('workout'); setSessionActive(true); setSessionTime(0); }}
+          onBack={() => setPage('home')}
+        />
+      )}
+      {page === 'workout' && (
+        <WorkoutActive
+          workout={currentWorkout}
+          sessionTime={sessionTime}
+          setSessionTime={setSessionTime}
+          sessionActive={sessionActive}
+          setSessionActive={setSessionActive}
+          onComplete={() => setPage('success')}
+          onExit={() => { setPage('home'); setSessionActive(false); }}
+        />
+      )}
+      {page === 'success' && (
+        <Success
+          workout={currentWorkout}
+          sessionTime={sessionTime}
+          onHome={() => setPage('home')}
+          onShare={() => setPage('share')}
+        />
+      )}
+      {page === 'pricing' && (
+        <Pricing
+          onBack={() => setPage('home')}
+          currentTier={userTier}
+        />
+      )}
+      {page === 'challenges' && (
+        <Challenges
+          userTier={userTier}
+          onBack={() => setPage('home')}
+          onStartChallenge={handleStartChallenge}
+        />
+      )}
+      {page === 'login' && (
+        <Login
+          onBack={() => setPage('home')}
+          onLogin={handleLogin}
+        />
+      )}
+      {page === 'progression' && (
+        <ProgressionTree
+          userTier={userTier}
+          goTo={goTo}
+        />
+      )}
+      {page === 'coaches' && (
+        <Coaches
+          goTo={goTo}
+          userTier={userTier}
+          isLoggedIn={isLoggedIn}
+        />
+      )}
+      {page === 'become-coach' && (
+        <BecomeCoach
+          goTo={goTo}
+          userTier={userTier}
+          isLoggedIn={isLoggedIn}
+        />
+      )}
+      {page === 'coach-dashboard' && (
+        <CoachDashboard
+          goTo={goTo}
+          isLoggedIn={isLoggedIn}
+        />
+      )}
+      {page === 'share' && (
+        <Share
+          goTo={goTo}
+          userTier={userTier}
+          sessionTime={sessionTime}
+          completedChallenges={completedChallenges}
+        />
+      )}
     </div>
   )
 }

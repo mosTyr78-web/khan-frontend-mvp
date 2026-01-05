@@ -1,18 +1,21 @@
-export default function Home({ workouts, onSelect, onPricing, onChallenges, onLogin, userTier, isLoggedIn }) {
+export default function Home({ workouts, onSelect, onPricing, onChallenges, onLogin, userTier, isLoggedIn, goTo }) {
+  const tierColors = {
+    FREE: 'bg-white/20',
+    STARTER: 'bg-gray-500',
+    PRO: 'bg-gradient-to-r from-blue-500 to-cyan-500',
+    ELITE: 'bg-gradient-to-r from-purple-500 to-pink-500',
+    ULTRA: 'bg-gradient-to-r from-yellow-500 to-orange-500',
+    LEGEND: 'bg-gradient-to-r from-red-500 to-orange-500'
+  }
+
   return (
     <div className="h-screen w-screen bg-black/50 px-4 py-6 overflow-y-auto flex flex-col">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         {/* User Tier Badge or Login */}
         {isLoggedIn ? (
-          <div className={`px-3 py-1 rounded-full text-xs font-bold ${
-            userTier === 'elite'
-              ? 'bg-gradient-to-r from-yellow-500 to-amber-500'
-              : userTier === 'pro'
-              ? 'bg-gradient-to-r from-blue-500 to-cyan-500'
-              : 'bg-white/20'
-          }`}>
-            {userTier?.toUpperCase() || 'FREE'}
+          <div className={`px-3 py-1 rounded-full text-xs font-bold ${tierColors[userTier] || tierColors.FREE}`}>
+            {userTier === 'LEGEND' && '👑 '}{userTier || 'FREE'}
           </div>
         ) : (
           <div className="w-16" />
@@ -28,14 +31,44 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
             LOGIN
           </button>
         ) : (
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center text-sm font-bold">
+          <button
+            onClick={() => goTo && goTo('coach-dashboard')}
+            className="w-10 h-10 rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center text-sm font-bold"
+          >
             👤
-          </div>
+          </button>
         )}
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-start">
         <p className="text-gray-400 mb-6">Professional Fitness Coach</p>
+
+        {/* New Feature Buttons Row */}
+        <div className="w-full max-w-sm grid grid-cols-2 gap-3 mb-4">
+          {/* Progression Tree */}
+          <button
+            onClick={() => goTo && goTo('progression')}
+            className="p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 border-2 border-purple-500/50 hover:border-purple-500 text-left active:scale-95 transition"
+          >
+            <div className="flex flex-col">
+              <p className="text-2xl mb-1">🌳</p>
+              <p className="text-sm font-black text-purple-400">PROGRESSION</p>
+              <p className="text-xs text-gray-400">Badges & Skins</p>
+            </div>
+          </button>
+
+          {/* Coaches */}
+          <button
+            onClick={() => goTo && goTo('coaches')}
+            className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border-2 border-blue-500/50 hover:border-blue-500 text-left active:scale-95 transition"
+          >
+            <div className="flex flex-col">
+              <p className="text-2xl mb-1">🏋️</p>
+              <p className="text-sm font-black text-blue-400">COACHS</p>
+              <p className="text-xs text-gray-400">Trouve ton coach</p>
+            </div>
+          </button>
+        </div>
 
         {/* Challenges Button */}
         <button
