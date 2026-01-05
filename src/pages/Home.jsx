@@ -135,7 +135,7 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
           <div className="flex justify-center gap-4">
             {/* Instagram */}
             <a
-              href="https://instagram.com/khan.fitness"
+              href="https://www.instagram.com/johnkhanapp/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 flex items-center justify-center hover:scale-110 transition-transform"
@@ -147,7 +147,7 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
 
             {/* TikTok */}
             <a
-              href="https://tiktok.com/@khan.fitness"
+              href="https://www.tiktok.com/@khanthefitnessapp"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-black border border-white/20 flex items-center justify-center hover:scale-110 transition-transform"
@@ -159,7 +159,7 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
 
             {/* Twitter/X */}
             <a
-              href="https://twitter.com/khanfitness"
+              href="https://x.com/TheKhanfitness"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-black border border-white/20 flex items-center justify-center hover:scale-110 transition-transform"

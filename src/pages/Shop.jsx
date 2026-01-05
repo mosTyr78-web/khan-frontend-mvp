@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Amazon affiliate tag - replace with your actual Amazon Associates tag
-const AMAZON_TAG = 'khanfitness-20';
+const AMAZON_TAG = 'khanthefitapp-21';
 
 // Product categories with Amazon affiliate links
 const CATEGORIES = [
