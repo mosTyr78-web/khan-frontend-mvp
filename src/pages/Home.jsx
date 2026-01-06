@@ -110,19 +110,29 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
           </button>
         </div>
 
-        {/* Challenges Button */}
-        <button
-          onClick={onChallenges}
-          className="w-full max-w-sm mb-4 p-4 rounded-2xl bg-gradient-to-r from-orange-500/20 to-red-500/20 border-2 border-orange-500/50 hover:border-orange-500 text-left active:scale-95 transition"
-        >
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-xl font-black text-orange-400">CHALLENGES</p>
-              <p className="text-xs text-gray-400">5K • Pushups • Squats & more</p>
-            </div>
-            <p className="text-3xl">🏆</p>
-          </div>
-        </button>
+        {/* Challenges Buttons Row */}
+        <div className="w-full max-w-sm grid grid-cols-2 gap-3 mb-4">
+          {/* Solo Challenges */}
+          <button
+            onClick={onChallenges}
+            className="p-4 rounded-2xl bg-gradient-to-r from-orange-500/20 to-red-500/20 border-2 border-orange-500/50 hover:border-orange-500 text-left active:scale-95 transition"
+          >
+            <p className="text-2xl mb-1">🏆</p>
+            <p className="text-sm font-black text-orange-400">CHALLENGES</p>
+            <p className="text-xs text-gray-400">5K • Pushups • more</p>
+          </button>
+
+          {/* KHAN LIVE */}
+          <button
+            onClick={() => goTo && goTo('challenge-live')}
+            className="p-4 rounded-2xl bg-gradient-to-r from-red-500/20 to-red-600/20 border-2 border-red-500/50 hover:border-red-500 text-left active:scale-95 transition relative overflow-hidden"
+          >
+            <div className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+            <p className="text-2xl mb-1">🔴</p>
+            <p className="text-sm font-black text-red-400">KHAN LIVE</p>
+            <p className="text-xs text-gray-400">YouTube Lives</p>
+          </button>
+        </div>
 
         {/* Category Filter */}
         <div className="w-full max-w-sm mb-4 flex gap-2 overflow-x-auto pb-2">

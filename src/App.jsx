@@ -14,6 +14,8 @@ import CoachDashboard from './pages/CoachDashboard'
 import Share from './pages/Share'
 import Skins from './pages/Skins'
 import Shop from './pages/Shop'
+import About from './pages/About'
+import ChallengeLive from './pages/ChallengeLive'
 
 const WORKOUTS = [
   // STANDARD WORKOUTS
@@ -252,6 +254,19 @@ export default function App() {
         <Shop
           goTo={goTo}
           userTier={userTier}
+        />
+      )}
+      {page === 'about' && (
+        <About
+          goTo={goTo}
+          userTier={userTier}
+        />
+      )}
+      {page === 'challenge-live' && (
+        <ChallengeLive
+          goTo={goTo}
+          userTier={userTier}
+          isLoggedIn={isLoggedIn}
         />
       )}
     </div>
