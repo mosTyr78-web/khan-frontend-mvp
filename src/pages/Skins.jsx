@@ -1,45 +1,51 @@
 import { useState } from 'react';
 
 const SKINS = [
-  // ANIME
+  // ANIME MEN
   {
     code: 'goku',
     name: 'Goku Theme',
     description: 'Unlock the power of a Saiyan warrior',
     category: 'anime',
-    unlockCondition: 'Reach Titan level in Strength tree',
+    unlockCondition: 'Complete 10 Force challenges',
+    image: '/assets/skins/goku.png',
     primaryColor: '#FF6B00',
     secondaryColor: '#0066FF',
     accentColor: '#FFD700',
     minTier: 'PRO',
     rarity: 'legendary',
-    icon: '🔥'
+    icon: '🔥',
+    gender: 'male'
   },
   {
     code: 'vegeta',
     name: 'Vegeta Theme',
     description: 'Pride of the Saiyan Prince',
     category: 'anime',
-    unlockCondition: 'Reach Hercule level in Strength tree',
+    unlockCondition: 'Reach Titan level in Strength tree',
+    image: '/assets/skins/vegeta.png',
     primaryColor: '#1E3A8A',
     secondaryColor: '#FFD700',
     accentColor: '#FFFFFF',
     minTier: 'ELITE',
     rarity: 'legendary',
-    icon: '👑'
+    icon: '👑',
+    gender: 'male'
   },
   {
-    code: 'flash',
-    name: 'Flash Theme',
-    description: 'Speed force activated',
+    code: 'saitama',
+    name: 'Saitama Theme',
+    description: '100 pushups, 100 situps, 100 squats, 10km run. Every day.',
     category: 'anime',
-    unlockCondition: 'Reach Ultra Runner in Running tree',
-    primaryColor: '#DC2626',
-    secondaryColor: '#FCD34D',
-    accentColor: '#FFFFFF',
-    minTier: 'PRO',
-    rarity: 'epic',
-    icon: '⚡'
+    unlockCondition: 'Complete 1,000,000 reps total',
+    image: '/assets/skins/saitama.png',
+    primaryColor: '#FEF08A',
+    secondaryColor: '#DC2626',
+    accentColor: '#000000',
+    minTier: 'LEGEND',
+    rarity: 'mythic',
+    icon: '👊',
+    gender: 'male'
   },
   {
     code: 'naruto',
@@ -47,38 +53,123 @@ const SKINS = [
     description: 'Believe it! Never give up',
     category: 'anime',
     unlockCondition: 'Complete 50 challenges',
+    image: '/assets/skins/naruto.png',
     primaryColor: '#F97316',
     secondaryColor: '#1E3A8A',
     accentColor: '#FFFFFF',
     minTier: 'PRO',
     rarity: 'epic',
-    icon: '🍥'
+    icon: '🍥',
+    gender: 'male'
   },
   {
-    code: 'one_punch',
-    name: 'Saitama Theme',
-    description: '100 pushups, 100 situps, 100 squats, 10km run. Every day.',
-    category: 'anime',
-    unlockCondition: 'Complete Saitama workout 30 days straight',
-    primaryColor: '#FEF08A',
-    secondaryColor: '#DC2626',
-    accentColor: '#000000',
+    code: 'flash',
+    name: 'Flash Theme',
+    description: 'Speed force activated',
+    category: 'heroes',
+    unlockCondition: 'Reach Ultra Runner in Running tree',
+    image: '/assets/skins/flash.png',
+    primaryColor: '#DC2626',
+    secondaryColor: '#FCD34D',
+    accentColor: '#FFFFFF',
     minTier: 'ELITE',
-    rarity: 'mythic',
-    icon: '👊'
+    rarity: 'legendary',
+    icon: '⚡',
+    gender: 'male'
   },
+
+  // ANIME WOMEN
   {
-    code: 'rock_lee',
-    name: 'Rock Lee Theme',
-    description: 'Hard work beats talent',
+    code: 'caulifla',
+    name: 'Caulifla Theme',
+    description: 'The prodigy Saiyan warrior',
     category: 'anime',
-    unlockCondition: 'Reach Avance in Strength tree',
-    primaryColor: '#22C55E',
-    secondaryColor: '#F97316',
+    unlockCondition: 'Complete 10 Force challenges',
+    image: '/assets/skins/caulifla.png',
+    primaryColor: '#A855F7',
+    secondaryColor: '#EC4899',
     accentColor: '#FFFFFF',
     minTier: 'PRO',
-    rarity: 'rare',
-    icon: '💚'
+    rarity: 'legendary',
+    icon: '💜',
+    gender: 'female'
+  },
+  {
+    code: 'android18',
+    name: 'Android 18 Theme',
+    description: 'Cool, calm, unstoppable',
+    category: 'anime',
+    unlockCondition: 'Reach Titan level in Strength tree',
+    image: '/assets/skins/android18.png',
+    primaryColor: '#60A5FA',
+    secondaryColor: '#1E3A8A',
+    accentColor: '#FFFFFF',
+    minTier: 'ELITE',
+    rarity: 'legendary',
+    icon: '❄️',
+    gender: 'female'
+  },
+  {
+    code: 'sakura',
+    name: 'Sakura Theme',
+    description: 'Inner strength unleashed',
+    category: 'anime',
+    unlockCondition: 'Complete 50 challenges',
+    image: '/assets/skins/sakura.png',
+    primaryColor: '#F472B6',
+    secondaryColor: '#22C55E',
+    accentColor: '#FFFFFF',
+    minTier: 'PRO',
+    rarity: 'epic',
+    icon: '🌸',
+    gender: 'female'
+  },
+  {
+    code: 'mirko',
+    name: 'Mirko Theme',
+    description: 'The rabbit hero - pure power',
+    category: 'anime',
+    unlockCondition: 'Reach 500 workouts',
+    image: '/assets/skins/mirko.png',
+    primaryColor: '#1F2937',
+    secondaryColor: '#EF4444',
+    accentColor: '#FFFFFF',
+    minTier: 'ELITE',
+    rarity: 'legendary',
+    icon: '🐰',
+    gender: 'female'
+  },
+
+  // HEROES WOMEN
+  {
+    code: 'wonderwoman',
+    name: 'Wonder Woman Theme',
+    description: 'Amazonian warrior strength',
+    category: 'heroes',
+    unlockCondition: 'Complete 100 challenges',
+    image: '/assets/skins/wonderwoman.png',
+    primaryColor: '#DC2626',
+    secondaryColor: '#FFD700',
+    accentColor: '#1E3A8A',
+    minTier: 'ULTRA',
+    rarity: 'mythic',
+    icon: '⭐',
+    gender: 'female'
+  },
+  {
+    code: 'captainmarvel',
+    name: 'Captain Marvel Theme',
+    description: 'Cosmic power unleashed',
+    category: 'heroes',
+    unlockCondition: 'Subscribe to LEGEND tier',
+    image: '/assets/skins/captainmarvel.png',
+    primaryColor: '#DC2626',
+    secondaryColor: '#1E40AF',
+    accentColor: '#FFD700',
+    minTier: 'LEGEND',
+    rarity: 'mythic',
+    icon: '✨',
+    gender: 'female'
   },
 
   // NATURE
@@ -93,7 +184,8 @@ const SKINS = [
     accentColor: '#84CC16',
     minTier: 'PRO',
     rarity: 'epic',
-    icon: '🌿'
+    icon: '🌿',
+    gender: 'neutral'
   },
   {
     code: 'ocean',
@@ -106,7 +198,8 @@ const SKINS = [
     accentColor: '#67E8F9',
     minTier: 'ELITE',
     rarity: 'epic',
-    icon: '🌊'
+    icon: '🌊',
+    gender: 'neutral'
   },
   {
     code: 'volcano',
@@ -119,77 +212,11 @@ const SKINS = [
     accentColor: '#FCD34D',
     minTier: 'ELITE',
     rarity: 'legendary',
-    icon: '🌋'
-  },
-  {
-    code: 'aurora',
-    name: 'Aurora Theme',
-    description: 'Northern lights guide your path',
-    category: 'nature',
-    unlockCondition: 'Master Flexibility tree',
-    primaryColor: '#8B5CF6',
-    secondaryColor: '#06B6D4',
-    accentColor: '#F0ABFC',
-    minTier: 'ULTRA',
-    rarity: 'legendary',
-    icon: '🌌'
+    icon: '🌋',
+    gender: 'neutral'
   },
 
-  // SPORT
-  {
-    code: 'fire',
-    name: 'Fire Theme',
-    description: 'Burning determination',
-    category: 'sport',
-    unlockCondition: 'Complete 25 challenges',
-    primaryColor: '#F97316',
-    secondaryColor: '#DC2626',
-    accentColor: '#FCD34D',
-    minTier: 'PRO',
-    rarity: 'rare',
-    icon: '🔥'
-  },
-  {
-    code: 'gold',
-    name: 'Gold Champion',
-    description: 'First place mentality',
-    category: 'sport',
-    unlockCondition: 'Earn 5 legendary badges',
-    primaryColor: '#FFD700',
-    secondaryColor: '#B8860B',
-    accentColor: '#FFFFFF',
-    minTier: 'ELITE',
-    rarity: 'legendary',
-    icon: '🏆'
-  },
-  {
-    code: 'iron',
-    name: 'Iron Will',
-    description: 'Unbreakable spirit',
-    category: 'sport',
-    unlockCondition: 'Reach Iron Legs (15,000km running)',
-    primaryColor: '#6B7280',
-    secondaryColor: '#374151',
-    accentColor: '#F3F4F6',
-    minTier: 'PRO',
-    rarity: 'epic',
-    icon: '🦾'
-  },
-  {
-    code: 'neon',
-    name: 'Neon Nights',
-    description: 'Train while they sleep',
-    category: 'sport',
-    unlockCondition: '50 workouts after 22h',
-    primaryColor: '#F0ABFC',
-    secondaryColor: '#7C3AED',
-    accentColor: '#22D3EE',
-    minTier: 'PRO',
-    rarity: 'rare',
-    icon: '🌙'
-  },
-
-  // LEGENDARY
+  // LEGENDARY TIER SKINS
   {
     code: 'legend',
     name: 'LEGEND Theme',
@@ -201,7 +228,8 @@ const SKINS = [
     accentColor: '#FFD700',
     minTier: 'LEGEND',
     rarity: 'mythic',
-    icon: '👑'
+    icon: '👑',
+    gender: 'neutral'
   },
   {
     code: 'ultra',
@@ -214,33 +242,8 @@ const SKINS = [
     accentColor: '#FFFFFF',
     minTier: 'ULTRA',
     rarity: 'legendary',
-    icon: '💎'
-  },
-  {
-    code: 'saiyan',
-    name: 'Super Saiyan',
-    description: 'Transcend your limits',
-    category: 'legendary',
-    unlockCondition: 'Reach Saiyan level (1,000,000 reps)',
-    primaryColor: '#FFD700',
-    secondaryColor: '#F97316',
-    accentColor: '#FFFFFF',
-    minTier: 'LEGEND',
-    rarity: 'mythic',
-    icon: '✨'
-  },
-  {
-    code: 'flash_human',
-    name: 'Flash Humain',
-    description: 'The fastest human alive',
-    category: 'legendary',
-    unlockCondition: 'Run 50,000km total',
-    primaryColor: '#DC2626',
-    secondaryColor: '#FFD700',
-    accentColor: '#FFFFFF',
-    minTier: 'LEGEND',
-    rarity: 'mythic',
-    icon: '⚡'
+    icon: '💎',
+    gender: 'neutral'
   }
 ];
 
@@ -260,10 +263,12 @@ const RARITY_BG = {
   mythic: 'from-red-500/20 to-pink-500/20'
 };
 
-const CATEGORIES = ['all', 'anime', 'nature', 'sport', 'legendary'];
+const CATEGORIES = ['all', 'anime', 'heroes', 'nature', 'legendary'];
+const GENDERS = ['all', 'male', 'female'];
 
 export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedGender, setSelectedGender] = useState('all');
   const [selectedSkin, setSelectedSkin] = useState(null);
 
   // Demo: unlock some skins based on tier
@@ -271,20 +276,21 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
   const userTierIndex = tierOrder.indexOf(userTier);
 
   const getUnlockedSkins = () => {
-    // Demo logic - in production this comes from API
-    const unlocked = ['fire']; // Everyone starts with fire
-    if (userTierIndex >= 2) unlocked.push('rock_lee'); // PRO
-    if (userTierIndex >= 3) unlocked.push('flash', 'naruto'); // ELITE
-    if (userTierIndex >= 4) unlocked.push('ultra', 'ocean'); // ULTRA
-    if (userTierIndex >= 5) unlocked.push('legend', 'goku', 'vegeta'); // LEGEND
+    const unlocked = [];
+    if (userTierIndex >= 2) unlocked.push('naruto', 'sakura', 'nature', 'caulifla'); // PRO
+    if (userTierIndex >= 3) unlocked.push('flash', 'goku', 'vegeta', 'android18', 'mirko', 'ocean', 'volcano'); // ELITE
+    if (userTierIndex >= 4) unlocked.push('ultra', 'wonderwoman'); // ULTRA
+    if (userTierIndex >= 5) unlocked.push('legend', 'saitama', 'captainmarvel'); // LEGEND
     return unlocked;
   };
 
   const unlockedSkins = getUnlockedSkins();
 
-  const filteredSkins = selectedCategory === 'all'
-    ? SKINS
-    : SKINS.filter(s => s.category === selectedCategory);
+  const filteredSkins = SKINS.filter(s => {
+    const categoryMatch = selectedCategory === 'all' || s.category === selectedCategory;
+    const genderMatch = selectedGender === 'all' || s.gender === selectedGender || s.gender === 'neutral';
+    return categoryMatch && genderMatch;
+  });
 
   const canAccessSkin = (skin) => {
     const skinTierIndex = tierOrder.indexOf(skin.minTier);
@@ -303,16 +309,28 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
       {/* Header */}
       <div className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
         <div className="flex items-center justify-between p-4">
-          <button
-            onClick={() => goTo('home')}
-            className="text-2xl"
-          >
-            ←
-          </button>
+          <button onClick={() => goTo('home')} className="text-2xl">←</button>
           <h1 className="text-xl font-bold">Skins</h1>
           <div className="text-sm text-gray-400">
             {unlockedSkins.length}/{SKINS.length}
           </div>
+        </div>
+
+        {/* Gender Filter */}
+        <div className="flex gap-2 px-4 pb-2">
+          {GENDERS.map(g => (
+            <button
+              key={g}
+              onClick={() => setSelectedGender(g)}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                selectedGender === g
+                  ? 'bg-orange-500 text-white'
+                  : 'bg-white/10 text-gray-400'
+              }`}
+            >
+              {g === 'all' ? '👥 All' : g === 'male' ? '👨 Men' : '👩 Women'}
+            </button>
+          ))}
         </div>
 
         {/* Category Filter */}
@@ -334,101 +352,110 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
       </div>
 
       {/* Active Skin Preview */}
-      <div className="p-4">
-        <div
-          className="p-6 rounded-2xl border-2 border-orange-500"
-          style={{
-            background: `linear-gradient(135deg, ${
-              SKINS.find(s => s.code === activeSkin)?.primaryColor || '#FF6B00'
-            }30, ${
-              SKINS.find(s => s.code === activeSkin)?.secondaryColor || '#FF0000'
-            }30)`
-          }}
-        >
-          <p className="text-sm text-gray-400 mb-2">Active Skin</p>
-          <div className="flex items-center gap-4">
-            <div className="text-4xl">
-              {SKINS.find(s => s.code === activeSkin)?.icon || '🎨'}
-            </div>
-            <div>
-              <h2 className="text-xl font-bold">
-                {SKINS.find(s => s.code === activeSkin)?.name || 'Default Theme'}
-              </h2>
-              <p className="text-gray-400 text-sm">
-                {SKINS.find(s => s.code === activeSkin)?.description || 'Classic KHAN theme'}
-              </p>
+      {activeSkin && SKINS.find(s => s.code === activeSkin) && (
+        <div className="p-4">
+          <div
+            className="relative p-6 rounded-2xl border-2 border-orange-500 overflow-hidden"
+            style={{
+              background: `linear-gradient(135deg, ${
+                SKINS.find(s => s.code === activeSkin)?.primaryColor || '#FF6B00'
+              }30, ${
+                SKINS.find(s => s.code === activeSkin)?.secondaryColor || '#FF0000'
+              }30)`
+            }}
+          >
+            {SKINS.find(s => s.code === activeSkin)?.image && (
+              <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-30">
+                <img
+                  src={SKINS.find(s => s.code === activeSkin)?.image}
+                  alt=""
+                  className="h-full w-full object-cover object-center"
+                />
+              </div>
+            )}
+            <div className="relative z-10">
+              <p className="text-sm text-gray-400 mb-2">Active Skin</p>
+              <div className="flex items-center gap-4">
+                <div className="text-4xl">
+                  {SKINS.find(s => s.code === activeSkin)?.icon || '🎨'}
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold">
+                    {SKINS.find(s => s.code === activeSkin)?.name || 'Default Theme'}
+                  </h2>
+                  <p className="text-gray-400 text-sm">
+                    {SKINS.find(s => s.code === activeSkin)?.description || 'Classic KHAN theme'}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Skins Grid */}
       <div className="grid grid-cols-2 gap-4 p-4">
         {filteredSkins.map(skin => {
           const isUnlocked = unlockedSkins.includes(skin.code);
-          const canAccess = canAccessSkin(skin);
           const isActive = activeSkin === skin.code;
 
           return (
             <div
               key={skin.code}
               onClick={() => setSelectedSkin(skin)}
-              className={`relative rounded-xl border-2 overflow-hidden cursor-pointer transition-all ${
-                isActive ? 'border-orange-500 scale-105' : RARITY_COLORS[skin.rarity]
+              className={`relative rounded-xl border-2 overflow-hidden cursor-pointer transition-all hover:scale-105 ${
+                isActive ? 'border-orange-500 ring-2 ring-orange-500' : RARITY_COLORS[skin.rarity]
               } ${!isUnlocked && 'opacity-60'}`}
             >
-              {/* Background gradient */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${RARITY_BG[skin.rarity]}`}
-              />
+              {/* Background image or gradient */}
+              {skin.image ? (
+                <div className="aspect-square relative">
+                  <img
+                    src={skin.image}
+                    alt={skin.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                </div>
+              ) : (
+                <div className={`aspect-square bg-gradient-to-br ${RARITY_BG[skin.rarity]}`} />
+              )}
 
-              {/* Content */}
-              <div className="relative p-4">
-                <div className="flex justify-between items-start mb-2">
+              {/* Content overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-3">
+                <div className="flex justify-between items-end">
+                  <div>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${
+                      skin.rarity === 'mythic' ? 'bg-red-500' :
+                      skin.rarity === 'legendary' ? 'bg-orange-500' :
+                      skin.rarity === 'epic' ? 'bg-purple-500' :
+                      skin.rarity === 'rare' ? 'bg-blue-500' :
+                      'bg-gray-500'
+                    }`}>
+                      {skin.rarity}
+                    </span>
+                    <h3 className="font-bold text-sm mt-1">{skin.name}</h3>
+                  </div>
                   <span className="text-2xl">{skin.icon}</span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    skin.rarity === 'mythic' ? 'bg-red-500' :
-                    skin.rarity === 'legendary' ? 'bg-orange-500' :
-                    skin.rarity === 'epic' ? 'bg-purple-500' :
-                    skin.rarity === 'rare' ? 'bg-blue-500' :
-                    'bg-gray-500'
-                  }`}>
-                    {skin.rarity}
-                  </span>
                 </div>
-
-                <h3 className="font-bold text-sm mb-1">{skin.name}</h3>
-
-                {/* Color preview */}
-                <div className="flex gap-1 mt-2">
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: skin.primaryColor }}
-                  />
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: skin.secondaryColor }}
-                  />
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: skin.accentColor }}
-                  />
-                </div>
-
-                {/* Lock overlay */}
-                {!isUnlocked && (
-                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                    <span className="text-2xl">🔒</span>
-                  </div>
-                )}
-
-                {/* Active indicator */}
-                {isActive && (
-                  <div className="absolute top-2 right-2">
-                    <span className="text-green-400">✓</span>
-                  </div>
-                )}
               </div>
+
+              {/* Lock overlay */}
+              {!isUnlocked && (
+                <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                  <div className="text-center">
+                    <span className="text-3xl">🔒</span>
+                    <p className="text-xs text-gray-400 mt-1">{skin.minTier}+</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Active indicator */}
+              {isActive && (
+                <div className="absolute top-2 right-2 bg-green-500 rounded-full p-1">
+                  <span className="text-white text-sm">✓</span>
+                </div>
+              )}
             </div>
           );
         })}
@@ -441,14 +468,40 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
           onClick={() => setSelectedSkin(null)}
         >
           <div
-            className="bg-gray-900 rounded-t-3xl w-full max-w-lg p-6"
+            className="bg-gray-900 rounded-t-3xl w-full max-w-lg overflow-hidden"
             onClick={e => e.stopPropagation()}
-            style={{
-              background: `linear-gradient(135deg, ${selectedSkin.primaryColor}20, ${selectedSkin.secondaryColor}20)`
-            }}
           >
-            <div className="flex justify-between items-start mb-4">
-              <div className="flex items-center gap-4">
+            {/* Skin image header */}
+            {selectedSkin.image && (
+              <div className="relative h-64">
+                <img
+                  src={selectedSkin.image}
+                  alt={selectedSkin.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent" />
+                <button
+                  onClick={() => setSelectedSkin(null)}
+                  className="absolute top-4 right-4 w-10 h-10 bg-black/50 rounded-full flex items-center justify-center text-white text-xl"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
+            <div className="p-6" style={{
+              background: selectedSkin.image ? undefined : `linear-gradient(135deg, ${selectedSkin.primaryColor}20, ${selectedSkin.secondaryColor}20)`
+            }}>
+              {!selectedSkin.image && (
+                <button
+                  onClick={() => setSelectedSkin(null)}
+                  className="absolute top-4 right-4 text-gray-400 text-2xl"
+                >
+                  ×
+                </button>
+              )}
+
+              <div className="flex items-center gap-4 mb-4">
                 <span className="text-5xl">{selectedSkin.icon}</span>
                 <div>
                   <h2 className="text-2xl font-bold">{selectedSkin.name}</h2>
@@ -463,53 +516,47 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
                   </span>
                 </div>
               </div>
-              <button
-                onClick={() => setSelectedSkin(null)}
-                className="text-gray-400 text-2xl"
-              >
-                ×
-              </button>
-            </div>
 
-            <p className="text-gray-300 mb-4">{selectedSkin.description}</p>
+              <p className="text-gray-300 mb-4">{selectedSkin.description}</p>
 
-            {/* Color palette */}
-            <div className="mb-4">
-              <p className="text-sm text-gray-400 mb-2">Color Palette</p>
-              <div className="flex gap-2">
-                <div className="flex-1 h-12 rounded-lg" style={{ backgroundColor: selectedSkin.primaryColor }} />
-                <div className="flex-1 h-12 rounded-lg" style={{ backgroundColor: selectedSkin.secondaryColor }} />
-                <div className="flex-1 h-12 rounded-lg" style={{ backgroundColor: selectedSkin.accentColor }} />
+              {/* Color palette */}
+              <div className="mb-4">
+                <p className="text-sm text-gray-400 mb-2">Color Palette</p>
+                <div className="flex gap-2">
+                  <div className="flex-1 h-12 rounded-lg" style={{ backgroundColor: selectedSkin.primaryColor }} />
+                  <div className="flex-1 h-12 rounded-lg" style={{ backgroundColor: selectedSkin.secondaryColor }} />
+                  <div className="flex-1 h-12 rounded-lg" style={{ backgroundColor: selectedSkin.accentColor }} />
+                </div>
               </div>
-            </div>
 
-            {/* Unlock condition */}
-            <div className="bg-black/30 rounded-xl p-4 mb-4">
-              <p className="text-sm text-gray-400 mb-1">How to unlock</p>
-              <p className="font-medium">{selectedSkin.unlockCondition}</p>
-              <p className="text-xs text-gray-500 mt-2">Requires {selectedSkin.minTier}+ tier</p>
-            </div>
+              {/* Unlock condition */}
+              <div className="bg-black/30 rounded-xl p-4 mb-4">
+                <p className="text-sm text-gray-400 mb-1">How to unlock</p>
+                <p className="font-medium">{selectedSkin.unlockCondition}</p>
+                <p className="text-xs text-gray-500 mt-2">Requires {selectedSkin.minTier}+ tier</p>
+              </div>
 
-            {/* Action button */}
-            {unlockedSkins.includes(selectedSkin.code) ? (
-              <button
-                onClick={() => handleSelectSkin(selectedSkin)}
-                className={`w-full py-4 rounded-xl font-bold text-lg ${
-                  activeSkin === selectedSkin.code
-                    ? 'bg-green-500 text-white'
-                    : 'bg-orange-500 text-white'
-                }`}
-              >
-                {activeSkin === selectedSkin.code ? '✓ Active' : 'Apply Skin'}
-              </button>
-            ) : (
-              <button
-                disabled
-                className="w-full py-4 rounded-xl font-bold text-lg bg-gray-700 text-gray-400"
-              >
-                🔒 Locked
-              </button>
-            )}
+              {/* Action button */}
+              {unlockedSkins.includes(selectedSkin.code) ? (
+                <button
+                  onClick={() => handleSelectSkin(selectedSkin)}
+                  className={`w-full py-4 rounded-xl font-bold text-lg ${
+                    activeSkin === selectedSkin.code
+                      ? 'bg-green-500 text-white'
+                      : 'bg-orange-500 text-white'
+                  }`}
+                >
+                  {activeSkin === selectedSkin.code ? '✓ Active' : 'Apply Skin'}
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className="w-full py-4 rounded-xl font-bold text-lg bg-gray-700 text-gray-400"
+                >
+                  🔒 Locked - Requires {selectedSkin.minTier}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
