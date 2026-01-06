@@ -7,7 +7,7 @@ async function createCheckoutSession(tier) {
     })
     const data = await response.json()
     if (data.sessionId) {
-      const stripe = Stripe('pk_test_51SglrmP8gDUIaCuBDcSCwc2cSyzNphCU1JRk1QloQ2urX3zwCmhj40unzPyeRFK6h8QN21ECk1etPnjjNeX7JenC00LOZb1dUY')
+      const stripe = Stripe('pk_live_51SglrmP8gDUIaCuBFi5kmHcgbubxdVDPLE7yLK8k27x4CZKmPkuL8bq84ZM0oukELXFSKWhrh4Xqp1KHkBWJSqRo00nf3iJDW6')
       await stripe.redirectToCheckout({ sessionId: data.sessionId })
     }
   } catch (error) {
