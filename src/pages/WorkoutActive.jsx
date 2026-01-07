@@ -1,6 +1,19 @@
 import { useState, useEffect } from 'react'
 
-// Exercise images (replace with Midjourney generated images)
+// PRO+ tier: Runway AI generated exercise videos (5sec loops)
+const EXERCISE_VIDEOS_PRO = {
+  pushups: '/videos/exercises/pushups-pro.mp4',
+  squats: '/videos/exercises/squats-pro.mp4',
+  burpees: '/videos/exercises/burpees-pro.mp4',
+  plank: '/videos/exercises/plank-pro.mp4',
+  lunges: '/videos/exercises/lunges-pro.mp4',
+  mountain_climbers: '/videos/exercises/mountain-climbers-pro.mp4',
+  jumping_jacks: '/videos/exercises/jumping-jacks-pro.mp4',
+  crunches: '/videos/exercises/crunches-pro.mp4',
+  default: '/videos/exercises/pushups-pro.mp4'
+}
+
+// FREE tier: Static images fallback
 const EXERCISE_IMAGES = {
   pushups: '/images/exercises/pushups.png',
   squats: '/images/exercises/squats.png',
@@ -13,17 +26,19 @@ const EXERCISE_IMAGES = {
   default: '/images/exercises/default.png'
 }
 
-const getExerciseImage = (exercise) => {
-  const name = exercise.toLowerCase()
-  if (name.includes('push')) return EXERCISE_IMAGES.pushups
-  if (name.includes('squat')) return EXERCISE_IMAGES.squats
-  if (name.includes('burpee')) return EXERCISE_IMAGES.burpees
-  if (name.includes('plank')) return EXERCISE_IMAGES.plank
-  if (name.includes('lunge')) return EXERCISE_IMAGES.lunges
-  if (name.includes('mountain') || name.includes('climber')) return EXERCISE_IMAGES.mountain_climbers
-  if (name.includes('jump') || name.includes('jack')) return EXERCISE_IMAGES.jumping_jacks
-  if (name.includes('crunch') || name.includes('abs') || name.includes('sit')) return EXERCISE_IMAGES.crunches
-  return EXERCISE_IMAGES.default
+const getExerciseMedia = (exercise, isPro = false) => {
+  const name = (exercise || '').toLowerCase()
+  const mediaMap = isPro ? EXERCISE_VIDEOS_PRO : EXERCISE_IMAGES
+
+  if (name.includes('push')) return { src: mediaMap.pushups, type: isPro ? 'video' : 'image' }
+  if (name.includes('squat')) return { src: mediaMap.squats, type: isPro ? 'video' : 'image' }
+  if (name.includes('burpee')) return { src: mediaMap.burpees, type: isPro ? 'video' : 'image' }
+  if (name.includes('plank')) return { src: mediaMap.plank, type: isPro ? 'video' : 'image' }
+  if (name.includes('lunge')) return { src: mediaMap.lunges, type: isPro ? 'video' : 'image' }
+  if (name.includes('mountain') || name.includes('climber')) return { src: mediaMap.mountain_climbers, type: isPro ? 'video' : 'image' }
+  if (name.includes('jump') || name.includes('jack')) return { src: mediaMap.jumping_jacks, type: isPro ? 'video' : 'image' }
+  if (name.includes('crunch') || name.includes('abs') || name.includes('sit')) return { src: mediaMap.crunches, type: isPro ? 'video' : 'image' }
+  return { src: mediaMap.default, type: isPro ? 'video' : 'image' }
 }
 
 const getVideoForExercise = (exercise) => {
@@ -36,7 +51,10 @@ const getVideoForExercise = (exercise) => {
   return '/videos/run.mp4'
 }
 
-export default function WorkoutActive({ workout, sessionTime, setSessionTime, sessionActive, setSessionActive, onComplete, onExit }) {
+export default function WorkoutActive({ workout, sessionTime, setSessionTime, sessionActive, setSessionActive, onComplete, onExit, userTier = 'FREE' }) {
+  // Check if user has PRO+ tier for premium video animations
+  const tierOrder = { FREE: 0, STARTER: 1, PRO: 2, ELITE: 3, ULTRA: 4, LEGEND: 5 }
+  const isPro = tierOrder[userTier] >= tierOrder['PRO']
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0)
   const [currentRep, setCurrentRep] = useState(0)
   const [showCoachVideo, setShowCoachVideo] = useState(false)
@@ -222,21 +240,49 @@ export default function WorkoutActive({ workout, sessionTime, setSessionTime, se
           <div className="absolute inset-0 bg-gradient-to-b from-orange-500/20 to-transparent rounded-3xl blur-2xl" />
 
           <div className="relative bg-white rounded-3xl overflow-hidden shadow-2xl">
-            {/* Exercise illustration */}
-            <div className="relative aspect-[4/3] bg-gradient-to-b from-gray-100 to-white flex items-center justify-center p-6">
-              <img
-                src={getExerciseImage(currentExercise.exercise)}
-                alt={currentExercise.exercise}
-                className="max-w-full max-h-full object-contain"
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.nextSibling.style.display = 'flex'
-                }}
-              />
-              {/* Fallback emoji display */}
-              <div className="hidden text-[100px] items-center justify-center">
-                {workout.icon || '💪'}
+            {/* PRO Badge */}
+            {isPro && (
+              <div className="absolute top-3 right-3 z-20 px-2 py-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-full">
+                <span className="text-[10px] font-black text-white">PRO</span>
               </div>
+            )}
+
+            {/* Exercise media - Video for PRO+, Image for FREE */}
+            <div className="relative aspect-[4/3] bg-gradient-to-b from-gray-100 to-white flex items-center justify-center overflow-hidden">
+              {isPro ? (
+                // PRO+ tier: Runway AI video loop
+                <video
+                  key={currentExercise.exercise}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src={getExerciseMedia(currentExercise.exercise, true).src} type="video/mp4" />
+                </video>
+              ) : (
+                // FREE tier: Static image or emoji fallback
+                <>
+                  <img
+                    src={getExerciseMedia(currentExercise.exercise, false).src}
+                    alt={currentExercise.exercise}
+                    className="max-w-full max-h-full object-contain p-6"
+                    onError={(e) => {
+                      e.target.style.display = 'none'
+                      e.target.nextSibling.style.display = 'flex'
+                    }}
+                  />
+                  <div className="hidden text-[100px] items-center justify-center">
+                    {workout.icon || '💪'}
+                  </div>
+
+                  {/* Upgrade hint for FREE users */}
+                  <div className="absolute bottom-2 left-2 right-2 bg-black/70 backdrop-blur-sm rounded-lg p-2 text-center">
+                    <p className="text-white/80 text-xs">Upgrade to <span className="text-orange-400 font-bold">PRO</span> for AI video guides</p>
+                  </div>
+                </>
+              )}
 
               {/* Form guide dots overlay */}
               <div className="absolute inset-0 pointer-events-none">
