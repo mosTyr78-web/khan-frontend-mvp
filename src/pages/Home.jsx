@@ -1,32 +1,15 @@
 import { useState } from 'react'
 
 export default function Home({ workouts, onSelect, onPricing, onChallenges, onLogin, userTier, isLoggedIn, goTo }) {
-  const [selectedCategory, setSelectedCategory] = useState('all')
-
   // Streak system (would come from API in production)
-  const [streak, setStreak] = useState({
-    current: 7,           // Jours consecutifs
-    best: 21,             // Record personnel
-    breakStreak: 0,       // Jours manques consecutifs
+  const [streak] = useState({
+    current: 7,
+    best: 21,
+    breakStreak: 0,
     lastWorkout: '2024-01-07',
     totalSessions: 45,
-    failedSessions: 3     // Seances abandonnees
+    failedSessions: 3
   })
-
-  // Quick WOW workouts
-  const wowWorkouts = workouts.filter(w => w.duration === 15 || w.duration === 30).slice(0, 2)
-
-  const categories = [
-    { id: 'all', name: 'Tous', icon: '🏠' },
-    { id: 'standard', name: 'Standard', icon: '🔥' },
-    { id: 'kids', name: 'Kids', icon: '🦸' },
-    { id: 'mama', name: 'Mama Strong', icon: '💪👩' },
-    { id: 'accessible', name: 'Accessible', icon: '🦽' }
-  ]
-
-  const filteredWorkouts = selectedCategory === 'all'
-    ? workouts
-    : workouts.filter(w => w.category === selectedCategory)
 
   const tierColors = {
     FREE: 'bg-white/20',
@@ -50,7 +33,10 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
           <div className="w-16" />
         )}
 
-        <h1 className="text-3xl font-black">KHAN</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-black">KHAN</h1>
+          <span className="px-2 py-0.5 bg-orange-500 rounded text-[10px] font-bold">BETA</span>
+        </div>
 
         {!isLoggedIn ? (
           <button
@@ -200,41 +186,6 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
           </button>
         </div>
 
-        {/* Category Filter */}
-        <div className="w-full max-w-sm mb-4 flex gap-2 overflow-x-auto pb-2">
-          {categories.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`flex-shrink-0 px-3 py-2 rounded-full text-xs font-bold transition-all ${
-                selectedCategory === cat.id
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-white/10 text-gray-400 hover:bg-white/20'
-              }`}
-            >
-              {cat.icon} {cat.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Workouts List */}
-        <div className="w-full max-w-sm space-y-3">
-          {filteredWorkouts.length === 0 ? (
-            <p className="text-center text-gray-500 py-8">Aucun workout dans cette categorie</p>
-          ) : (
-            filteredWorkouts.map(w => (
-              <button key={w.id} onClick={() => onSelect(w.id)} className="w-full p-4 rounded-2xl border-2 border-gray-700 hover:border-gray-500 bg-gray-900/50 text-left active:scale-95 transition">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <p className="text-xl font-black">{w.name}</p>
-                    <p className="text-xs text-gray-400">{w.difficulty} • {w.duration}min</p>
-                  </div>
-                  <p className="text-3xl">{w.icon}</p>
-                </div>
-              </button>
-            ))
-          )}
-        </div>
       </div>
 
       {/* Bottom Section */}
