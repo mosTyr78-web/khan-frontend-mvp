@@ -174,12 +174,14 @@ export default function Landing({ goTo }) {
           </div>
 
           {/* Video Grid - Premium Preview */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
             {[
               { name: 'PUSHUPS', video: '/videos/exercises/pushups-pro.mp4', tier: 'PRO' },
               { name: 'SQUATS', video: '/videos/exercises/squats-pro.mp4', tier: 'ELITE' },
               { name: 'BURPEES', video: '/videos/exercises/burpees-pro.mp4', tier: 'PRO' },
-              { name: 'LUNGES', video: '/videos/exercises/lunges-pro.mp4', tier: 'ELITE' }
+              { name: 'LUNGES', video: '/videos/exercises/lunges-pro.mp4', tier: 'ELITE' },
+              { name: 'TRICEPS', video: '/videos/exercises/triceps-pro.mp4', tier: 'ULTRA' },
+              { name: 'BENCH', video: '/videos/exercises/bench-pro.mp4', tier: 'LEGEND' }
             ].map((exercise, i) => (
               <div
                 key={i}
@@ -202,9 +204,10 @@ export default function Landing({ goTo }) {
 
                   {/* Tier badge */}
                   <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black ${
-                    exercise.tier === 'ELITE'
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500'
-                      : 'bg-gradient-to-r from-orange-500 to-red-500'
+                    exercise.tier === 'LEGEND' ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
+                    exercise.tier === 'ULTRA' ? 'bg-gradient-to-r from-cyan-500 to-blue-500' :
+                    exercise.tier === 'ELITE' ? 'bg-gradient-to-r from-purple-500 to-pink-500' :
+                    'bg-gradient-to-r from-orange-500 to-red-500'
                   }`}>
                     {exercise.tier}
                   </div>

@@ -199,7 +199,9 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
               { name: 'PUSHUPS', video: '/videos/exercises/pushups-pro.mp4', tier: 'PRO' },
               { name: 'SQUATS', video: '/videos/exercises/squats-pro.mp4', tier: 'ELITE' },
               { name: 'BURPEES', video: '/videos/exercises/burpees-pro.mp4', tier: 'PRO' },
-              { name: 'LUNGES', video: '/videos/exercises/lunges-pro.mp4', tier: 'ELITE' }
+              { name: 'LUNGES', video: '/videos/exercises/lunges-pro.mp4', tier: 'ELITE' },
+              { name: 'TRICEPS', video: '/videos/exercises/triceps-pro.mp4', tier: 'ULTRA' },
+              { name: 'BENCH', video: '/videos/exercises/bench-pro.mp4', tier: 'LEGEND' }
             ].map((exercise, i) => (
               <div
                 key={i}
@@ -218,6 +220,8 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
                   </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                   <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[8px] font-black ${
+                    exercise.tier === 'LEGEND' ? 'bg-yellow-500' :
+                    exercise.tier === 'ULTRA' ? 'bg-cyan-500' :
                     exercise.tier === 'ELITE' ? 'bg-purple-500' : 'bg-orange-500'
                   }`}>
                     {exercise.tier}
