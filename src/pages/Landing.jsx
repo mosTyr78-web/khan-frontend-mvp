@@ -91,6 +91,11 @@ export default function Landing({ goTo }) {
 
   return (
     <div className="min-h-screen w-screen bg-black text-white overflow-y-auto">
+      {/* BETA Badge */}
+      <div className="fixed top-4 left-4 z-50">
+        <span className="px-3 py-1 bg-orange-500 rounded text-xs font-bold">BETA</span>
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20">
         {/* Animated background */}
