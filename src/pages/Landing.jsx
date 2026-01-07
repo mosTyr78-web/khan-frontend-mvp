@@ -147,6 +147,100 @@ export default function Landing({ goTo }) {
         </div>
       </section>
 
+      {/* AI WORKOUT SHOWCASE - PREMIUM TEASER */}
+      <section className="px-6 py-24 bg-gradient-to-b from-black via-slate-900 to-black relative overflow-hidden">
+        {/* Animated background glow */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-orange-500/10 rounded-full blur-[150px] animate-pulse" />
+          <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-red-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
+        </div>
+
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full border border-orange-500/30 mb-6">
+              <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              <span className="text-orange-400 text-sm font-bold tracking-wider">AI-POWERED WORKOUTS</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black mb-6">
+              <span className="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent">
+                ENTRAÎNEMENT NEXT-GEN
+              </span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Guides video generes par IA. Chaque exercice, chaque mouvement,
+              en qualite cinematographique. <span className="text-orange-400 font-bold">PRO exclusive.</span>
+            </p>
+          </div>
+
+          {/* Video Grid - Premium Preview */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {[
+              { name: 'PUSHUPS', video: '/videos/exercises/pushups-pro.mp4', tier: 'PRO' },
+              { name: 'SQUATS', video: '/videos/exercises/squats-pro.mp4', tier: 'ELITE' },
+              { name: 'BURPEES', video: '/videos/exercises/burpees-pro.mp4', tier: 'PRO' },
+              { name: 'LUNGES', video: '/videos/exercises/lunges-pro.mp4', tier: 'ELITE' }
+            ].map((exercise, i) => (
+              <div
+                key={i}
+                className="group relative rounded-3xl overflow-hidden bg-black border border-white/10 hover:border-orange-500/50 transition-all hover:scale-105 cursor-pointer"
+              >
+                {/* Video */}
+                <div className="aspect-[3/4] relative overflow-hidden">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  >
+                    <source src={exercise.video} type="video/mp4" />
+                  </video>
+
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+                  {/* Tier badge */}
+                  <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black ${
+                    exercise.tier === 'ELITE'
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                      : 'bg-gradient-to-r from-orange-500 to-red-500'
+                  }`}>
+                    {exercise.tier}
+                  </div>
+
+                  {/* Play indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                      <div className="w-0 h-0 border-l-[20px] border-l-white border-y-[12px] border-y-transparent ml-1" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Exercise name */}
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <p className="text-white font-black text-xl">{exercise.name}</p>
+                  <p className="text-gray-400 text-xs mt-1">AI Video Guide</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <div className="inline-flex flex-col sm:flex-row gap-4 items-center">
+              <button
+                onClick={() => goTo('pricing')}
+                className="px-10 py-5 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl text-white font-black text-lg hover:scale-105 transition-transform shadow-2xl shadow-orange-500/30"
+              >
+                DÉBLOQUER PRO →
+              </button>
+              <p className="text-gray-500 text-sm">A partir de $9.99/mois</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SKINS SHOWCASE - NEW SEXY SECTION */}
       <section className="px-6 py-20 bg-gradient-to-b from-black via-purple-900/20 to-black relative overflow-hidden">
         {/* Background decoration */}
