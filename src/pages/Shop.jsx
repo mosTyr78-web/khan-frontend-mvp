@@ -3,6 +3,70 @@ import { useState } from 'react';
 // Amazon affiliate tag - replace with your actual Amazon Associates tag
 const AMAZON_TAG = 'khanthefitapp-21';
 
+// Official KHAN Merch
+const KHAN_MERCH = [
+  {
+    id: 'khan-tshirt-1',
+    type: 'apparel',
+    name: 'KHAN Classic Tee',
+    description: 'Premium black tee with KHAN logo',
+    price: 34.99,
+    image: '/assets/merch/tshirt-1.png',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    comingSoon: true
+  },
+  {
+    id: 'khan-tshirt-2',
+    type: 'apparel',
+    name: 'KHAN Training Tee',
+    description: 'Breathable workout shirt',
+    price: 39.99,
+    image: '/assets/merch/tshirt-2.png',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    comingSoon: true
+  },
+  {
+    id: 'khan-tshirt-3',
+    type: 'apparel',
+    name: 'KHAN Elite Tee',
+    description: 'Limited edition design',
+    price: 44.99,
+    image: '/assets/merch/tshirt-3.png',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    comingSoon: true
+  },
+  {
+    id: 'khan-medal-gold',
+    type: 'reward',
+    name: 'KHAN Gold Medal',
+    description: 'Earn by completing 100 challenges',
+    price: null,
+    image: '/assets/merch/medal-gold-1.png',
+    unlockCondition: '100 challenges completed',
+    tier: 'LEGEND'
+  },
+  {
+    id: 'khan-medal-silver',
+    type: 'reward',
+    name: 'KHAN Achievement Medal',
+    description: 'Exclusive reward for top performers',
+    price: null,
+    image: '/assets/merch/medal-gold-2.png',
+    unlockCondition: '50 challenges completed',
+    tier: 'ELITE'
+  },
+  {
+    id: 'khan-medal-bronze',
+    type: 'reward',
+    name: 'KHAN Warrior Medal',
+    description: 'Your first milestone achievement',
+    price: null,
+    image: '/assets/merch/medal-gold-3.png',
+    unlockCondition: '25 challenges completed',
+    tier: 'PRO'
+  }
+];
+
 // Product categories with Amazon affiliate links
 const CATEGORIES = [
   { id: 'equipment', name: 'Equipment', icon: '🏋️' },
@@ -292,10 +356,81 @@ export default function Shop({ goTo, userTier }) {
         </div>
       </div>
 
+      {/* KHAN Official Merch */}
+      <div className="p-4">
+        <h2 className="text-xl font-black mb-1 flex items-center gap-2">
+          <span className="text-orange-500">🔥</span> KHAN Official
+        </h2>
+        <p className="text-xs text-gray-400 mb-4">Exclusive merchandise & rewards</p>
+
+        {/* T-Shirts */}
+        <div className="mb-6">
+          <h3 className="text-sm font-bold text-orange-400 mb-3">APPAREL - Coming Soon</h3>
+          <div className="grid grid-cols-3 gap-2">
+            {KHAN_MERCH.filter(m => m.type === 'apparel').map(item => (
+              <div
+                key={item.id}
+                className="rounded-xl border border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10 overflow-hidden relative"
+              >
+                <div className="absolute top-1 right-1 px-2 py-0.5 bg-orange-500 rounded text-[10px] font-bold">
+                  SOON
+                </div>
+                <div className="aspect-square bg-black/50 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-2">
+                  <h4 className="font-bold text-xs">{item.name}</h4>
+                  <p className="text-orange-400 text-sm font-bold">${item.price}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Medals / Rewards */}
+        <div className="mb-6">
+          <h3 className="text-sm font-bold text-yellow-400 mb-3">MEDALS - Earn by Progress</h3>
+          <div className="grid grid-cols-3 gap-2">
+            {KHAN_MERCH.filter(m => m.type === 'reward').map(item => (
+              <div
+                key={item.id}
+                className="rounded-xl border border-yellow-500/30 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 overflow-hidden"
+              >
+                <div className="aspect-square bg-black/50 flex items-center justify-center overflow-hidden p-2">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="p-2">
+                  <h4 className="font-bold text-xs">{item.name}</h4>
+                  <p className="text-[10px] text-gray-400">{item.unlockCondition}</p>
+                  <span className={`inline-block mt-1 px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                    item.tier === 'LEGEND' ? 'bg-yellow-500/30 text-yellow-300' :
+                    item.tier === 'ELITE' ? 'bg-purple-500/30 text-purple-300' :
+                    'bg-blue-500/30 text-blue-300'
+                  }`}>
+                    {item.tier}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="mx-4 border-t border-white/10 my-4" />
+
       {/* Amazon Partner Notice */}
-      <div className="mx-4 mt-4 p-3 rounded-xl bg-orange-500/20 border border-orange-500/30">
-        <p className="text-xs text-orange-300">
-          As an Amazon Associate, KHAN earns from qualifying purchases. Shopping supports the app!
+      <div className="mx-4 p-3 rounded-xl bg-green-500/20 border border-green-500/30">
+        <p className="text-xs text-green-300">
+          <span className="font-bold">Partner Gear:</span> As an Amazon Associate, KHAN earns from qualifying purchases. Shopping supports the app!
         </p>
       </div>
 

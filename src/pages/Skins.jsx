@@ -77,6 +77,21 @@ const SKINS = [
     icon: '⚡',
     gender: 'male'
   },
+  {
+    code: 'broly',
+    name: 'Broly Theme',
+    description: 'LEGENDARY Super Saiyan - Ultimate power unleashed',
+    category: 'anime',
+    unlockCondition: 'LEGEND tier exclusive - The ultimate warrior',
+    image: '/assets/skins/broly.png',
+    primaryColor: '#22C55E',
+    secondaryColor: '#000000',
+    accentColor: '#A855F7',
+    minTier: 'LEGEND',
+    rarity: 'mythic',
+    icon: '🐉',
+    gender: 'male'
+  },
 
   // ANIME WOMEN
   {

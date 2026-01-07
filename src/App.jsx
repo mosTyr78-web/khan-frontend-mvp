@@ -16,6 +16,22 @@ import Skins from './pages/Skins'
 import Shop from './pages/Shop'
 import About from './pages/About'
 import ChallengeLive from './pages/ChallengeLive'
+import FreeTier from './pages/FreeTier'
+
+// Background images based on tier/skin
+const BACKGROUNDS = {
+  default: '/assets/backgrounds/gym-default.png',
+  FREE: '/assets/backgrounds/gym-default.png',
+  STARTER: '/assets/backgrounds/gym-2.png',
+  PRO: '/assets/backgrounds/gym-3.png',
+  ELITE: '/assets/backgrounds/gym-4.png',
+  ULTRA: '/assets/backgrounds/fire-1.png',
+  LEGEND: '/assets/backgrounds/fire-2.png',
+  // Skin-specific backgrounds
+  goku: '/assets/backgrounds/fire-3.png',
+  vegeta: '/assets/backgrounds/fire-4.png',
+  broly: '/assets/backgrounds/fire-1.png'
+}
 
 const WORKOUTS = [
   // STANDARD WORKOUTS
@@ -146,8 +162,24 @@ export default function App() {
 
   const currentWorkout = WORKOUTS.find(w => w.id === selectedWorkout)
 
+  // Get background based on skin or tier
+  const getBackground = () => {
+    if (activeSkin && BACKGROUNDS[activeSkin]) {
+      return BACKGROUNDS[activeSkin]
+    }
+    return BACKGROUNDS[userTier] || BACKGROUNDS.default
+  }
+
   return (
-    <div className="h-screen w-screen text-white overflow-hidden">
+    <div
+      className="h-screen w-screen text-white overflow-hidden"
+      style={{
+        backgroundImage: `url(${getBackground()})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       {page === 'landing' && (
         <Landing goTo={goTo} />
       )}
@@ -267,6 +299,15 @@ export default function App() {
           goTo={goTo}
           userTier={userTier}
           isLoggedIn={isLoggedIn}
+        />
+      )}
+      {page === 'free-tier' && (
+        <FreeTier
+          goTo={goTo}
+          onSelectWorkout={(workout) => {
+            setSelectedWorkout(workout.id)
+            setPage('countdown')
+          }}
         />
       )}
     </div>

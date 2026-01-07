@@ -3,6 +3,19 @@ import { useState } from 'react'
 export default function Home({ workouts, onSelect, onPricing, onChallenges, onLogin, userTier, isLoggedIn, goTo }) {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
+  // Streak system (would come from API in production)
+  const [streak, setStreak] = useState({
+    current: 7,           // Jours consecutifs
+    best: 21,             // Record personnel
+    breakStreak: 0,       // Jours manques consecutifs
+    lastWorkout: '2024-01-07',
+    totalSessions: 45,
+    failedSessions: 3     // Seances abandonnees
+  })
+
+  // Quick WOW workouts
+  const wowWorkouts = workouts.filter(w => w.duration === 15 || w.duration === 30).slice(0, 2)
+
   const categories = [
     { id: 'all', name: 'Tous', icon: '🏠' },
     { id: 'standard', name: 'Standard', icon: '🔥' },
@@ -57,7 +70,60 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-start">
-        <p className="text-gray-400 mb-6">Professional Fitness Coach</p>
+        <p className="text-gray-400 mb-4">Professional Fitness Coach</p>
+
+        {/* Streak Card */}
+        {isLoggedIn && (
+          <div className="w-full max-w-sm mb-4">
+            <div className={`p-4 rounded-2xl ${streak.breakStreak > 0 ? 'bg-red-500/20 border-2 border-red-500/50' : 'bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border-2 border-orange-500/50'}`}>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="text-4xl">{streak.breakStreak > 0 ? '💔' : '🔥'}</div>
+                  <div>
+                    {streak.breakStreak > 0 ? (
+                      <>
+                        <p className="text-red-400 text-xs font-bold">BREAK STREAK</p>
+                        <p className="text-white text-2xl font-black">{streak.breakStreak} jours</p>
+                        <p className="text-red-300 text-xs">Ne perds pas ta progression!</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-orange-400 text-xs font-bold">STREAK ACTIF</p>
+                        <p className="text-white text-2xl font-black">{streak.current} jours</p>
+                        <p className="text-gray-400 text-xs">Record: {streak.best} jours</p>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-gray-400 text-xs">Sessions</p>
+                  <p className="text-white font-bold">{streak.totalSessions}</p>
+                  {streak.failedSessions > 0 && (
+                    <p className="text-red-400 text-xs">{streak.failedSessions} failed</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* WOW Quick Workout Button */}
+        <div className="w-full max-w-sm mb-4">
+          <button
+            onClick={() => {
+              const randomWow = workouts[Math.floor(Math.random() * workouts.length)]
+              onSelect(randomWow.id)
+            }}
+            className="w-full p-4 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 text-left active:scale-95 transition relative overflow-hidden"
+          >
+            <div className="absolute -right-4 -top-4 text-8xl opacity-20">⚡</div>
+            <div className="relative z-10">
+              <p className="text-white/80 text-xs font-bold">WORKOUT EXPRESS</p>
+              <p className="text-white text-2xl font-black">START NOW</p>
+              <p className="text-white/70 text-sm">15-30 min random workout</p>
+            </div>
+          </button>
+        </div>
 
         {/* New Feature Buttons Row */}
         <div className="w-full max-w-sm grid grid-cols-2 gap-3 mb-4">
