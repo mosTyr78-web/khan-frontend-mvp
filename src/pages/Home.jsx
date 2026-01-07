@@ -186,6 +186,52 @@ export default function Home({ workouts, onSelect, onPricing, onChallenges, onLo
           </button>
         </div>
 
+        {/* AI WORKOUT SHOWCASE - PRO+ */}
+        <div className="w-full max-w-sm mb-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+            <span className="text-orange-400 text-xs font-bold tracking-wider">AI-POWERED</span>
+            <span className="ml-auto text-xs px-2 py-0.5 bg-gradient-to-r from-orange-500 to-red-500 rounded-full font-bold">PRO</span>
+          </div>
+
+          <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1">
+            {[
+              { name: 'PUSHUPS', video: '/videos/exercises/pushups-pro.mp4', tier: 'PRO' },
+              { name: 'SQUATS', video: '/videos/exercises/squats-pro.mp4', tier: 'ELITE' },
+              { name: 'BURPEES', video: '/videos/exercises/burpees-pro.mp4', tier: 'PRO' },
+              { name: 'LUNGES', video: '/videos/exercises/lunges-pro.mp4', tier: 'ELITE' }
+            ].map((exercise, i) => (
+              <div
+                key={i}
+                onClick={() => onSelect && onSelect(1)}
+                className="flex-shrink-0 w-32 rounded-2xl overflow-hidden bg-black border border-white/10 hover:border-orange-500/50 transition-all hover:scale-105 cursor-pointer"
+              >
+                <div className="aspect-[3/4] relative">
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  >
+                    <source src={exercise.video} type="video/mp4" />
+                  </video>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+                  <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-full text-[8px] font-black ${
+                    exercise.tier === 'ELITE' ? 'bg-purple-500' : 'bg-orange-500'
+                  }`}>
+                    {exercise.tier}
+                  </div>
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <p className="text-white font-black text-xs">{exercise.name}</p>
+                    <p className="text-white/50 text-[10px]">AI Guide</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
 
       {/* Bottom Section */}
