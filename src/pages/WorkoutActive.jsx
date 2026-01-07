@@ -1,4 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+// Sound effects
+const playSound = (type) => {
+  const sounds = {
+    success: '/sounds/success.mp3',  // Fairy Tail WOW
+    fail: '/sounds/fail.mp3'         // Bruh
+  }
+  const audio = new Audio(sounds[type])
+  audio.volume = 0.5
+  audio.play().catch(() => {})  // Ignore autoplay errors
+}
 
 // PRO+ tier: Runway AI generated exercise videos (5sec loops)
 const EXERCISE_VIDEOS_PRO = {
@@ -112,6 +123,7 @@ export default function WorkoutActive({ workout, sessionTime, setSessionTime, se
   }
 
   const handleExerciseComplete = () => {
+    playSound('success')  // 🎉 Fairy Tail WOW!
     setShowCompletionAnimation(true)
     spawnParticles()
 
@@ -126,6 +138,13 @@ export default function WorkoutActive({ workout, sessionTime, setSessionTime, se
         onComplete()
       }
     }, 800)
+  }
+
+  const handleQuit = () => {
+    playSound('fail')  // 😂 Bruh...
+    setTimeout(() => {
+      onExit()
+    }, 500)
   }
 
   const handlePrevExercise = () => {
@@ -200,7 +219,7 @@ export default function WorkoutActive({ workout, sessionTime, setSessionTime, se
       <div className="relative z-10 p-4">
         <div className="flex items-center justify-between mb-3">
           <button
-            onClick={onExit}
+            onClick={handleQuit}
             className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white text-xl hover:bg-white/20 transition-all"
           >
             ←
