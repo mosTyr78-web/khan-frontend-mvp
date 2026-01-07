@@ -154,6 +154,21 @@ const SKINS = [
     icon: '🐰',
     gender: 'female'
   },
+  {
+    code: 'mamastrong',
+    name: 'Mama Strong Theme',
+    description: 'Strength for the whole family',
+    category: 'anime',
+    unlockCondition: 'Complete 75 workouts',
+    image: '/assets/skins/mamastrong.png',
+    primaryColor: '#EC4899',
+    secondaryColor: '#F97316',
+    accentColor: '#FFFFFF',
+    minTier: 'ELITE',
+    rarity: 'legendary',
+    icon: '💪',
+    gender: 'female'
+  },
 
   // HEROES WOMEN
   {
@@ -293,7 +308,7 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
   const getUnlockedSkins = () => {
     const unlocked = [];
     if (userTierIndex >= 2) unlocked.push('naruto', 'sakura', 'nature', 'caulifla'); // PRO
-    if (userTierIndex >= 3) unlocked.push('flash', 'goku', 'vegeta', 'android18', 'mirko', 'ocean', 'volcano'); // ELITE
+    if (userTierIndex >= 3) unlocked.push('flash', 'goku', 'vegeta', 'android18', 'mirko', 'mamastrong', 'ocean', 'volcano'); // ELITE
     if (userTierIndex >= 4) unlocked.push('ultra', 'wonderwoman'); // ULTRA
     if (userTierIndex >= 5) unlocked.push('legend', 'saitama', 'captainmarvel'); // LEGEND
     return unlocked;
@@ -325,7 +340,10 @@ export default function Skins({ goTo, userTier, activeSkin, setActiveSkin }) {
       <div className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
         <div className="flex items-center justify-between p-4">
           <button onClick={() => goTo('home')} className="text-2xl">←</button>
-          <h1 className="text-xl font-bold">Skins</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold">Skins</h1>
+            <span className="px-2 py-0.5 bg-orange-500 rounded text-[10px] font-bold">BETA</span>
+          </div>
           <div className="text-sm text-gray-400">
             {unlockedSkins.length}/{SKINS.length}
           </div>
